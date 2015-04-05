@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -13,12 +14,17 @@ import com.google.android.gms.internal.po;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
 
     EditText Ime;
     EditText Priimek;
-    EditText DatRoj;
+    DatePicker DatRoj;
     EditText Spol;
     EditText Visina;
     EditText Teza;
@@ -39,7 +45,7 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
 
         Ime = (EditText)findViewById(R.id.editTextIme);
         Priimek = (EditText)findViewById(R.id.editTextPriimek);
-        DatRoj = (EditText)findViewById(R.id.editTextDatumRosjtva);
+        DatRoj = (DatePicker)findViewById(R.id.datePicker);
         Spol = (EditText)findViewById(R.id.editTextSpol);
         Visina = (EditText)findViewById(R.id.editTextVisina);
         Teza = (EditText)findViewById(R.id.editTextTeza);
@@ -73,7 +79,6 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
 
             Ime.setText(vrnjen.getIme());
             Priimek.setText(vrnjen.getPriimek());
-            DatRoj.setText(vrnjen.getDatumRojstva());
             Spol.setText(vrnjen.getSpol());
             Visina.setText(vrnjen.getVisina().toString());
             Teza.setText(vrnjen.getTeza().toString());
@@ -115,7 +120,9 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
     {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
 
-        Uporabnik u = new Uporabnik(Ime.getText().toString(),Priimek.getText().toString(),DatRoj.getText().toString(),Spol.getText().toString(),Double.parseDouble(Visina.getText().toString()),Double.parseDouble(Teza.getText().toString()), Status.getText().toString(), Tip.getText().toString(), Zdravilo.getText().toString());
+        String DatumRojstva = DatRoj.getDayOfMonth() + "." + DatRoj.getMonth() + "." + DatRoj.getYear();
+
+        Uporabnik u = new Uporabnik(Ime.getText().toString(),Priimek.getText().toString(),DatumRojstva,Spol.getText().toString(),Double.parseDouble(Visina.getText().toString()),Double.parseDouble(Teza.getText().toString()), Status.getText().toString(), Tip.getText().toString(), Zdravilo.getText().toString());
         dbHandler.dodajPodatkeUporabnika(u);
         prikaz.setText("buckeee!");
 

@@ -16,6 +16,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DodajanjeAktivnosti"
+            android:label="@string/title_activity_dodajanje_aktivnosti" >
+        </activity>
+        <activity
+            android:name=".DodajanjeObroka"
+            android:label="@string/title_activity_dodajanje_obroka" >
+        </activity>
+        <activity
+            android:name=".dodajanjeMeritve"
+            android:label="@string/title_activity_dodajanje_meritve" >
+        </activity>
+        <activity
+            android:name=".AktivnostVnosZdravil"
+            android:label="@string/title_activity_aktivnost_vnos_zdravil" >
+        </activity>
+        <activity
+            android:name=".dodajanje_podatkov_uporabnika"
+            android:label="@string/title_activity_dodajanje_podatkov_uporabnika" >
+        </activity>
+        <activity
+            android:name=".TestTimePicker"
+            android:label="@string/title_activity_test_time_picker" >
+        </activity>
+        <activity
+            android:name=".TestDatePicker"
+            android:label="@string/title_activity_test_date_picker" >
+        </activity>
     </application>
 
 </manifest>
