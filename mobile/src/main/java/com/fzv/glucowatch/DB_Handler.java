@@ -22,6 +22,8 @@ public class DB_Handler extends SQLiteOpenHelper {
     private static final String TABLE_MERITEV = "Meritev";
     private static final String TABLE_OBROK = "Obrok";
     private static final String TABLE_VNOS_ZDRAVILA = "VnosZdravila";
+    private static final String TABLE_UPORABNIK = "podatkiUporabnik";
+    private static final String TABLE_CAS_OBROKOV = "TabelaCasObrokov";
 
 
     //Spremenljivke tabele Aktivnosti
@@ -77,6 +79,17 @@ public class DB_Handler extends SQLiteOpenHelper {
                 + "ID_Vnosa INTEGER PRIMARY KEY," + COLUMN_ZDRAVILO + " TEXT," +
                 COLUMN_ODMEREK + " NUMBER," + COLUMN_DATUM_CAS_VNOSA + " DATETIME " + ")";
         db.execSQL(CREATE_VnosZDravila_TABLE);
+
+        //Za tabelo s podatki uporabnika
+        String CREATE_podatkiUporabnika_TABLE = "CREATE TABLE " + TABLE_UPORABNIK + "("
+                + "ID_uporabnika INTEGER PRIMARY KEY, Ime TEXT, Priimek TEXT, Datum_rojstva TEXT,"
+                +" Spol TEXT, Visina NUMBER, Teza NUMBER, Status TEXT, Tip_bolezni TEXT, Osnovno_zdravilo TEXT )";
+        db.execSQL(CREATE_podatkiUporabnika_TABLE);
+
+        //Za tabelo cas obrokov
+        String CREATE_Cas_obrokov_TABLE = "CREATE TABLE " + TABLE_CAS_OBROKOV + "("+
+                "ID_casa_obroka INTEGER PRIMARY KEY, Cas TEXT, Vrsta_obroka TEXT )";
+        db.execSQL(CREATE_Cas_obrokov_TABLE);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion,
@@ -86,6 +99,8 @@ public class DB_Handler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MERITEV);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_OBROK);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_VNOS_ZDRAVILA);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_UPORABNIK);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAS_OBROKOV);
         onCreate(db);
     }
 
@@ -250,4 +265,101 @@ public class DB_Handler extends SQLiteOpenHelper {
 
         return  vnosi;
     }
+
+    //Metode za podatke o uporabniku
+    public void dodajPodatkeUporabnika(Uporabnik uporabnik)
+    {
+        ContentValues values = new ContentValues();
+        values.put("Ime", uporabnik.getIme());
+        values.put("Priimek", uporabnik.getPriimek());
+        values.put("Datum_rojstva" , uporabnik.getDatumRojstva());
+        values.put("Spol", uporabnik.getSpol());
+        values.put("Visina", uporabnik.getVisina().toString());
+        values.put("Teza", uporabnik.getTeza().toString());
+        values.put("Status", uporabnik.getZapislitveniStatus());
+        values.put("Tip_bolezni", uporabnik.getTipBolezni());
+        values.put("Osnovno_zdravilo", uporabnik.getOsnovnoZdravilo());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_UPORABNIK, null, values);
+        db.close();
+    }
+
+    public Uporabnik vrniPodatkeUporabnika()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("Select * FROM " + TABLE_UPORABNIK, null);
+
+        Uporabnik u = new Uporabnik();
+
+        if(c.getCount()==0){
+            return u; //Ne vrne podatkov, ker še niso vpisani
+        }
+
+        while (c.moveToNext())
+        {
+            u.setIme(c.getString(1));
+            u.setPriimek(c.getString(2));
+            u.setDatumRojstva(c.getString(3));
+            u.setSpol(c.getString(4));
+            u.setVisina(Double.parseDouble(c.getString(5)));
+            u.setTeza(Double.parseDouble(c.getString(6)));
+            u.setZapislitveniStatus(c.getString(7));
+            u.setTipBolezni(c.getString(8));
+            u.setOsnovnoZdravilo(c.getString(9));
+        }
+
+        return  u;
+    }
+
+    //Metode za Case obrokov, ki spadajo k uporabniku
+    public void dodajCaseObrokov(CasObrokov casObrokov)
+    {
+        ContentValues values = new ContentValues();
+        values.put("Cas", casObrokov.getCasObroka());
+        values.put("Vrsta_obroka", casObrokov.getVrstaObroka());
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_CAS_OBROKOV, null, values);
+        db.close();
+    }
+
+    public void BrisiCaseObrokov()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_CAS_OBROKOV);
+    }
+    public CasObrokov[] vrniCaseObrokov()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("Select * FROM " + TABLE_CAS_OBROKOV, null);
+
+        CasObrokov[] casObrokov = new CasObrokov[c.getCount()];
+
+        if(c.getCount()==0){
+            return casObrokov;
+        }
+
+
+        CasObrokov obrok;
+        Integer indeks = 0;
+
+        while (c.moveToNext())
+        {
+            obrok = new CasObrokov();
+
+            obrok.setCasObroka(c.getString(1));
+            obrok.setVrstaObroka(c.getString(2));
+
+            casObrokov[indeks] = obrok;
+            indeks++;
+        }
+
+        return  casObrokov;
+    }
+
+
+
+
 }
