@@ -1,7 +1,7 @@
 package com.fzv.glucowatch;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,10 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 
 public class AktivnostVnosZdravil extends ActionBarActivity {
@@ -47,7 +44,7 @@ public class AktivnostVnosZdravil extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_aktivnost_vnos_zdravil, menu);
+        //getMenuInflater().inflate(R.menu.menu_aktivnost_vnos_zdravil, menu);
         return true;
     }
 

@@ -1,7 +1,7 @@
 package com.fzv.glucowatch;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,14 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.google.android.gms.internal.po;
-
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+//import com.google.android.gms.internal.po;
 
 
 public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
@@ -97,7 +90,7 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_dodajanje_podatkov_uporabnika, menu);
+        //getMenuInflater().inflate(R.menu.menu_dodajanje_podatkov_uporabnika, menu);
         return true;
     }
 

@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+
+import com.fzv.glucowatch.Utils.WearableUtils;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -14,6 +17,18 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        testNotification();
+    }
+
+    private void testNotification() {
+        Button notificationButton = (Button) findViewById(R.id.notificationBtn);
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WearableUtils.showNotificationWithConfirmation(getApplicationContext(),"Opozorilo","Potrebno bo nekaj pojesti.");
+            }
+        });
     }
 
 
