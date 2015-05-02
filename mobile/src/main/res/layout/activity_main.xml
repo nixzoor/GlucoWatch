@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -11,29 +11,25 @@
         android:layout_height="wrap_content"
         android:text="Vnos obroka"
         android:id="@+id/Btn_obrok"
-        android:onClick="activityDodajObrok"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:onClick="activityDodajObrok" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Vnos aktivnosti"
         android:id="@+id/Btn_aktivnost"
+        android:layout_marginTop="38dp"
         android:onClick="activityDodajAktivnost"
-        android:layout_below="@+id/Btn_obrok"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+ />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Vnos meritve"
         android:id="@+id/btnDodajMeritve"
+        android:layout_marginTop="38dp"
         android:onClick="activityDodajMeritev"
-        android:layout_below="@+id/Btn_aktivnost"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+ />
 
     <Button
         android:layout_width="fill_parent"
@@ -41,9 +37,8 @@
         android:text="Vnos Uporabe zdravila"
         android:id="@+id/btnVnosZdravila"
         android:onClick="activityDodajVnosZdravila"
-        android:layout_below="@+id/btnDodajMeritve"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="10dp"
+ />
 
     <Button
         android:layout_width="fill_parent"
@@ -53,8 +48,14 @@
         android:onClick="activityPodatkiUporabnika"
 
 
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="10dp"
+ />
 
-</RelativeLayout>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="testno obvestilo"
+        android:id="@+id/notificationBtn"
+        android:layout_centerHorizontal="true" />
+
+</LinearLayout>
