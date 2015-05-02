@@ -1,13 +1,24 @@
 package com.fzv.glucowatch;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import android.app.Dialog;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.widget.Toast;
 
 public class DodajanjeAktivnosti extends ActionBarActivity {
 
@@ -67,6 +78,9 @@ public class DodajanjeAktivnosti extends ActionBarActivity {
 
         dbHandler.dodajAktivnost(aktivnost);
 
+        Toast.makeText(getApplicationContext(), "Aktivnost dodana",
+                Toast.LENGTH_SHORT).show();
+
         vrsta.setText("");
         intenzivnost.setText("");
         trajanje.setText("");
@@ -82,6 +96,46 @@ public class DodajanjeAktivnosti extends ActionBarActivity {
         }
 
         aktivnostiBesedilo.setText(vseAktivnosti);
+
+    }
+
+    public void IzborAktivnosti(View view) {
+        final CharSequence[] items = {
+                "hitra hoja", "plavanje", "tenis", "tek", "hoja po stopnicah", "kolesarjenje", "skupinske vadbe(aerobika, joga, pilates...)", "smučanje", "skupinski športi(nogomet, košarka...)", "ples"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Make your selection");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+                Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                        Toast.LENGTH_SHORT).show();
+                vrsta.setText(items[item]);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    public void IzborIntenzivnosti(View view) {
+        final CharSequence[] items = {
+                "Majhna", "Srednja", "Velika"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Izberite intenzivnost");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+                /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                        Toast.LENGTH_SHORT).show();*/
+                intenzivnost.setText(items[item]);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
 
     }
 }

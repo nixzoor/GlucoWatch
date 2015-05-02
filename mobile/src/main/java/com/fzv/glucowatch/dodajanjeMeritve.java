@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -70,6 +71,8 @@ public class dodajanjeMeritve extends ActionBarActivity {
         String datum = datumformat.format(d);
 
         Meritev m = new Meritev(datum, Double.parseDouble(vrednostGlukoze.getText().toString()));
+        Toast.makeText(getApplicationContext(), "Meritev dodana",
+                Toast.LENGTH_SHORT).show();
 
         dbHandler.dodajMeritev(m);
 

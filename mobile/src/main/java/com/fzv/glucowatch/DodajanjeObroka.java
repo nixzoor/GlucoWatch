@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,19 +16,20 @@ import java.util.Date;
 public class DodajanjeObroka extends ActionBarActivity {
 
 
-    EditText velikostObroka;
     EditText procentOH;
 
     TextView vsiObrokiText;
+
+    String velikostObrokaGumb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodajanje_obroka);
 
-        velikostObroka = (EditText)findViewById(R.id.txtVelikostObroka);
         procentOH = (EditText)findViewById(R.id.txtProcentOH);
         vsiObrokiText = (TextView)findViewById(R.id.textViewPrikazObrokov);
+        velikostObrokaGumb = "Srednje velik";
 
         DB_Handler dbHandler = new DB_Handler(this,null,null,1);
         Obrok[] vsiObrokiPolje = dbHandler.vrniVseObroke();
@@ -70,9 +72,11 @@ public class DodajanjeObroka extends ActionBarActivity {
         SimpleDateFormat datumformat = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
         String datum = datumformat.format(d);
 
-        Obrok o = new Obrok(datum,velikostObroka.getText().toString(), Integer.parseInt(procentOH.getText().toString()));
+        Obrok o = new Obrok(datum,velikostObrokaGumb, Integer.parseInt(procentOH.getText().toString()));
 
         dbHandler.dodajObrok(o);
+        Toast.makeText(getApplicationContext(), "Obrok dodan",
+                Toast.LENGTH_SHORT).show();
 
         Obrok[] vsiObrokiPolje = dbHandler.vrniVseObroke();
 
@@ -85,5 +89,18 @@ public class DodajanjeObroka extends ActionBarActivity {
 
         vsiObrokiText.setText(text);
 
+    }
+
+    public void spremeniVelikostObrokaMajhen(View view)
+    {
+        velikostObrokaGumb = "Majhen obrok";
+    }
+    public void spremeniVelikostObrokaSrednji(View view)
+    {
+        velikostObrokaGumb = "Srednje velik obrok";
+    }
+    public void spremeniVelikostObrokaVelik(View view)
+    {
+        velikostObrokaGumb = "Velik obrok";
     }
 }

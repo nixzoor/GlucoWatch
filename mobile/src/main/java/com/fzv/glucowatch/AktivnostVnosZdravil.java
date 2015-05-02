@@ -1,15 +1,19 @@
 package com.fzv.glucowatch;
 
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 
 public class AktivnostVnosZdravil extends ActionBarActivity {
@@ -76,6 +80,8 @@ public class AktivnostVnosZdravil extends ActionBarActivity {
 
 
         dbHandler.dodajVnosZdravila(vnos);
+        Toast.makeText(getApplicationContext(), "Vnos zdravil dodan",
+                Toast.LENGTH_SHORT).show();
 
         VnosZdravila[] vsiVnosi = dbHandler.vrniVseVnoseZdravil();
 

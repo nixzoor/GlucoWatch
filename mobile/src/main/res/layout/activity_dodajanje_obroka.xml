@@ -10,22 +10,12 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtVelikostObroka"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/txtProcentOH"
         android:layout_below="@+id/textView4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/textViewPrikazObrokov"
+        android:layout_alignEnd="@+id/textViewPrikazObrokov" />
 
     <Button
         android:layout_width="wrap_content"
@@ -61,8 +51,37 @@
         android:layout_height="wrap_content"
         android:text="Odstotek ogljikovih hidratov (%)"
         android:id="@+id/textView4"
-        android:layout_below="@+id/txtVelikostObroka"
+        android:layout_below="@+id/btnMajhen"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Majhen"
+        android:id="@+id/btnMajhen"
+        android:onClick="spremeniVelikostObrokaMajhen"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Srednji"
+        android:id="@+id/btnSrednji"
+        android:onClick="spremeniVelikostObrokaSrednji"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Velik"
+        android:id="@+id/btnVelik"
+        android:onClick="spremeniVelikostObrokaVelik"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

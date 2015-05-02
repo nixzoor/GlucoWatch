@@ -1,7 +1,9 @@
 package com.fzv.glucowatch;
 
-import android.os.Bundle;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,8 +11,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-//import com.google.android.gms.internal.po;
+import com.google.android.gms.internal.zzgo;
+import org.w3c.dom.Text;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
@@ -133,6 +141,10 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
         casObrokov = new CasObrokov(casVecerje.getCurrentHour().toString() + ":" + casVecerje.getCurrentMinute().toString(), "Večerja");
         dbHandler.dodajCaseObrokov(casObrokov);
 
+        //Sporočilo da so podatki shranjeni
+        Toast.makeText(getApplicationContext(), "Podatki shranjeni",
+                Toast.LENGTH_LONG).show();
+
         Uporabnik vrnjen = dbHandler.vrniPodatkeUporabnika();
         String podatki = "Ime: " + vrnjen.getIme() + "\n Priimek: " + vrnjen.getPriimek() + "\n Datum rojstva: " + vrnjen.getDatumRojstva() +
                 "\n Spol: " + vrnjen.getSpol() + "\n Visina(cm): " + vrnjen.getVisina().toString() + "\n Teza(kg): " + vrnjen.getTeza().toString() +
@@ -145,5 +157,64 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
                 "\nPredviden čas večerje: " + obroki[2].getCasObroka();
 
         prikaz.setText(podatki);
+    }
+
+    public void IzborSpola(View view) {
+        final CharSequence[] items = {
+                "Moški", "Ženski"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Izberite spol");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+                /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                        Toast.LENGTH_SHORT).show();*/
+                Spol.setText(items[item]);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+    public void IzborStatusa(View view) {
+        final CharSequence[] items = {
+                "Šoloobvezen otrok", "Dijak", "Študent", "Zaposlen", "Brezposeln", "Upokojen"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Izberite status");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+                /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                        Toast.LENGTH_SHORT).show();*/
+                Status.setText(items[item]);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    public void IzborTipaBolezni(View view) {
+        final CharSequence[] items = {
+                "Tip 1", "Tip 2"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Izberite tip bolezni");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+                /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                        Toast.LENGTH_SHORT).show();*/
+                Tip.setText(items[item]);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 }
