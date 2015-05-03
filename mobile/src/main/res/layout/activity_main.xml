@@ -58,4 +58,12 @@
         android:id="@+id/notificationBtn"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
+        android:text="Statistika"
+        android:id="@+id/button4"
+        android:layout_centerHorizontal="true"
+        android:onClick="activityStatistika" />
+
 </LinearLayout>

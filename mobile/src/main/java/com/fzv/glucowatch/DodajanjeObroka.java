@@ -1,5 +1,7 @@
 package com.fzv.glucowatch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -102,5 +104,21 @@ public class DodajanjeObroka extends ActionBarActivity {
     public void spremeniVelikostObrokaVelik(View view)
     {
         velikostObrokaGumb = "Velik obrok";
+    }
+
+    public void NavodilaObrok(View view)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("30% - To velja, ko oseba poje sestavljen obrok, ki sestoji iz mesa, juhe, solate in kjer ogljikovi hidrati (riž, testenine, krompir, kruh…) predstavljajo samo prilogo.\n \n" +
+                "50%-60% - Kadar oseba poje obrok, ki je sestavljen približno iz polovice ogljikovih hidrato in polovice drugih component (npr. zrezek+krompir, večina hitre prehrane, sendviči itd.)\n \n" +
+                "80%-90% - Obroki, ki so sestavljeni pretežno iz ogljikovih hidratov in imajo zgolj dodano meso ali zelenjavo (rižote, testenine z omakami…)");
+        dlgAlert.setTitle("Navodila za vnos oglikovih hidratov");
+        dlgAlert.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //dismiss the dialog
+                    }
+                });
+        dlgAlert.create().show();
     }
 }

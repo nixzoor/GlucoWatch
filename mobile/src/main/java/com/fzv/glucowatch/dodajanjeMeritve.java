@@ -73,7 +73,7 @@ public class dodajanjeMeritve extends ActionBarActivity {
         Meritev m = new Meritev(datum, Double.parseDouble(vrednostGlukoze.getText().toString()));
         Toast.makeText(getApplicationContext(), "Meritev dodana",
                 Toast.LENGTH_SHORT).show();
-
+        vrednostGlukoze.setText("");
         dbHandler.dodajMeritev(m);
 
         Meritev [] vseMeritve = dbHandler.vrniVseMeritve();

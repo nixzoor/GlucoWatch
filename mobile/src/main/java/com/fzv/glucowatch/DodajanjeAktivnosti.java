@@ -109,7 +109,7 @@ public class DodajanjeAktivnosti extends ActionBarActivity {
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 // Do something with the selection
-                Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                Toast.makeText(getApplicationContext(), "Izbrali ste " + items[item],
                         Toast.LENGTH_SHORT).show();
                 vrsta.setText(items[item]);
             }

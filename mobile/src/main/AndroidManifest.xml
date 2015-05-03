@@ -44,6 +44,14 @@
             android:name=".TestDatePicker"
             android:label="@string/title_activity_test_date_picker" >
         </activity>
+        <activity
+            android:name=".Statistika"
+            android:label="@string/title_activity_statistika" >
+        </activity>
+        <activity
+            android:name=".Statistika_meritev"
+            android:label="@string/title_activity_statistika_meritev" >
+        </activity>
     </application>
 
 </manifest>

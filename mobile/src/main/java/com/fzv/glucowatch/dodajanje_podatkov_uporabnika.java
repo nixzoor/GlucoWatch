@@ -217,4 +217,80 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
         alert.show();
 
     }
+
+    public void IzborTerapije(View view) {
+
+        DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
+        Uporabnik vrnjen = dbHandler.vrniPodatkeUporabnika();
+        if(vrnjen.getOsnovnoZdravilo() == "Tip 1")
+        {
+            final CharSequence[] items = {"Inzulinska črpalka (hitrodelujoči inzulini)",
+                    "Injekcije za samoinjiciranje inzulina (kratkodelujoči + dolgodelujoči)"
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Izberite tip bolezni");
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    // Do something with the selection
+                /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                        Toast.LENGTH_SHORT).show();*/
+                    Tip.setText(items[item]);
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        else if (vrnjen.getTipBolezni() == "Tip 2")
+        {
+            final CharSequence[] items = {
+                    "Terapija samo s prilagojeno prehrano (dieto) in gibanjem",
+                    "Terapija s tabletami",
+                    "Kombinacija tablete + inzulin",
+                    "Terapija samo z inzulinom (lahko inzulinska črpalka ali samoinjekcijska peresa)"
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Izberite tip bolezni");
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    // Do something with the selection
+                /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                        Toast.LENGTH_SHORT).show();*/
+                    Tip.setText(items[item]);
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        else
+        {
+            final CharSequence[] items = {
+                    "Inzulinska črpalka (hitrodelujoči inzulini)",
+                    "Injekcije za samoinjiciranje inzulina (kratkodelujoči + dolgodelujoči)",
+                    "Terapija samo s prilagojeno prehrano (dieto) in gibanjem",
+                    "Terapija s tabletami",
+                    "Kombinacija tablete + inzulin",
+                    "Terapija samo z inzulinom (lahko inzulinska črpalka ali samoinjekcijska peresa)"
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Izberite tip bolezni");
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    // Do something with the selection
+                /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                        Toast.LENGTH_SHORT).show();*/
+                    Tip.setText(items[item]);
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+
+
+
+
+
+    }
 }

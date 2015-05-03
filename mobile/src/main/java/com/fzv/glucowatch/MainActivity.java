@@ -76,4 +76,9 @@ public class MainActivity extends ActionBarActivity {
     {
         startActivity(new Intent(MainActivity.this, dodajanje_podatkov_uporabnika.class) );
     }
+
+    public void activityStatistika(View v)
+    {
+        startActivity(new Intent(MainActivity.this, Statistika.class) );
+    }
 }
