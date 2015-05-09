@@ -90,6 +90,7 @@ public class DodajanjeObroka extends ActionBarActivity {
         }
 
         vsiObrokiText.setText(text);
+        procentOH.setText("");
 
     }
 
