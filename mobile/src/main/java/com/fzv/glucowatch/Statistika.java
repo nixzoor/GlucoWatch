@@ -48,4 +48,16 @@ public class Statistika extends ActionBarActivity {
     {
         startActivity(new Intent(Statistika.this, Statistika_meritev.class) );
     }
+    public void activityStatistikaAktivnosti(View v)
+    {
+        startActivity(new Intent(Statistika.this, statistika_aktivnosti.class) );
+    }
+    public void activityStatistikaObrokov(View v)
+    {
+        startActivity(new Intent(Statistika.this, Statistika_obrokov.class) );
+    }
+    public void activityStatistikaVnosovZdravil(View v)
+    {
+        startActivity(new Intent(Statistika.this, Statistika_zdravil.class) );
+    }
 }

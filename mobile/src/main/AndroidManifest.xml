@@ -52,6 +52,18 @@
             android:name=".Statistika_meritev"
             android:label="@string/title_activity_statistika_meritev" >
         </activity>
+        <activity
+            android:name=".statistika_aktivnosti"
+            android:label="@string/title_activity_statistika_aktivnosti" >
+        </activity>
+        <activity
+            android:name=".Statistika_obrokov"
+            android:label="@string/title_activity_statistika_obrokov" >
+        </activity>
+        <activity
+            android:name=".Statistika_zdravil"
+            android:label="@string/title_activity_statistika_zdravil" >
+        </activity>
     </application>
 
 </manifest>

@@ -13,5 +13,8 @@
     <string name="title_activity_test_date_picker">TestDatePicker</string>
     <string name="title_activity_statistika">Statistika</string>
     <string name="title_activity_statistika_meritev">Statistika meritev</string>
+    <string name="title_activity_statistika_aktivnosti">Statistika aktivnosti</string>
+    <string name="title_activity_statistika_obrokov">Statistika obrokov</string>
+    <string name="title_activity_statistika_zdravil">Statistika vnosov zdravil</string>
 
 </resources>
