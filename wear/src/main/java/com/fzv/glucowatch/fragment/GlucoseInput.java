@@ -1,12 +1,11 @@
-package com.fzv.glucowatch;
+package com.fzv.glucowatch.fragment;
 
-public class GlucoseInput extends InputLayout {
+import android.widget.ImageView;
 
+import com.fzv.glucowatch.R;
 
-    @Override
-    protected int getView() {
-        return R.layout.activity_glucose_input;
-    }
+public class GlucoseInput extends AbstractInputLayout {
+
 
     @Override
     protected Double getBottomValue() {
@@ -31,5 +30,10 @@ public class GlucoseInput extends InputLayout {
     @Override
     protected String getShortUnit() {
         return "";
+    }
+
+    protected void setImageIcon() {
+        ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.blood_drop);
     }
 }

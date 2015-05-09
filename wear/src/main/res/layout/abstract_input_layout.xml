@@ -28,7 +28,8 @@
                     android:background="@color/blue"
                     android:gravity="center_vertical|right"
                     android:paddingRight="@dimen/menu_buttons_padding"
-                    android:text="+X1" />
+                    android:text="+X1"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/minus_x1"
@@ -38,7 +39,8 @@
                     android:background="@android:color/holo_blue_light"
                     android:gravity="left|center_vertical"
                     android:paddingLeft="@dimen/menu_buttons_padding"
-                    android:text="-X1" />
+                    android:text="-X1"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -56,7 +58,8 @@
                     android:background="@android:color/holo_blue_light"
                     android:gravity="left|center_vertical"
                     android:paddingLeft="@dimen/menu_buttons_padding"
-                    android:text="+X2" />
+                    android:text="+X2"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/minus_x2"
@@ -66,7 +69,8 @@
                     android:background="@color/blue"
                     android:gravity="center_vertical|right"
                     android:paddingRight="@dimen/menu_buttons_padding"
-                    android:text="-X2" />
+                    android:text="-X2"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -84,7 +88,8 @@
                     android:background="@color/blue"
                     android:gravity="center_vertical|right"
                     android:paddingRight="@dimen/menu_buttons_padding"
-                    android:text="+X3" />
+                    android:text="+X3"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/minus_x3"
@@ -94,7 +99,8 @@
                     android:background="@android:color/holo_blue_light"
                     android:gravity="left|center_vertical"
                     android:paddingLeft="@dimen/menu_buttons_padding"
-                    android:text="-X3" />
+                    android:text="-X3"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
@@ -106,29 +112,35 @@
             android:orientation="vertical"
             android:weightSum="2"
             android:visibility="visible"
-            android:id="@+id/layout_display">
+            android:id="@+id/layout_display"
+            >
+
 
             <TextView
-                android:id="@+id/value_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:gravity="bottom"
                 android:text="0"
-                android:textAppearance="@style/TextAppearance.Wearable.Large"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:gravity="bottom|center_horizontal"
+                android:textStyle="bold"
+                android:id="@+id/value_display_textView"
+                android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/unit_textViev"
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|center_horizontal">
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:text="unit"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/black" />
+                android:id="@+id/imageView"
+                android:layout_alignParentTop="false" />
+            </RelativeLayout>
         </LinearLayout>
 
     </RelativeLayout>
