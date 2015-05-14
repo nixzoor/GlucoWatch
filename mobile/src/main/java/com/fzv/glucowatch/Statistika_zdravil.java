@@ -39,91 +39,93 @@ public class Statistika_zdravil extends ActionBarActivity {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
         VnosZdravila [] vsiVnosi = dbHandler.vrniVseVnoseZdravil();
 
+        if(vsiVnosi.length != 0) {
+            Double[] kolicina = new Double[vsiVnosi.length];
+            Date[] datumi = new Date[vsiVnosi.length];
 
-        Double [] kolicina = new Double[vsiVnosi.length];
-        Date[] datumi = new Date[vsiVnosi.length];
-
-        Date d;
-        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
-        String temp = "";
-        for(int i = 0; i < vsiVnosi.length; i++)
-        {
-            kolicina[i] = 1.0 * vsiVnosi[i].getOdmerek();
-            try
-            {
-                d = df.parse(vsiVnosi[i].getCasVnosa());
-                datumi[i] = d;
-            }
-            catch(ParseException e)
-            {
-
-            }
-        }
-        //UStvarjanje točk s podatki iz polj in računanje statistike
-
-        Double min;
-        Double max;
-        Double avg = 0.0;
-        Double avg10 = 0.0;
-
-        Integer stevec = 0;
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
-
-        DataPoint dpoint;
-        if(vsiVnosi.length > 10)
-        {
-            min = kolicina[kolicina.length-10];
-            max = kolicina[kolicina.length-10];
-
-            for (int i = vsiVnosi.length-10; i < vsiVnosi.length; i++) {
-                dpoint = new DataPoint(i, kolicina[i]);
-                series.appendData(dpoint, true, 10);
-
-                if(kolicina[i] < min) min= kolicina[i];
-                if(kolicina[i] > max) max= kolicina[i];
-                avg10+= kolicina[i];
-                stevec++;
-            }
-        }
-        else {
-            min = kolicina[0];
-            max = kolicina[0];
+            Date d;
+            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
+            String temp = "";
             for (int i = 0; i < vsiVnosi.length; i++) {
-                dpoint = new DataPoint(i, kolicina[i]);
-                series.appendData(dpoint, true, 10);
+                kolicina[i] = 1.0 * vsiVnosi[i].getOdmerek();
+                try {
+                    d = df.parse(vsiVnosi[i].getCasVnosa());
+                    datumi[i] = d;
+                } catch (ParseException e) {
 
-                if(kolicina[i] < min) min= kolicina[i];
-                if(kolicina[i] > max) max= kolicina[i];
-                avg10+= kolicina[i];
-                stevec++;
+                }
             }
-        }
-        avg10 = avg10 / stevec;
+            //UStvarjanje točk s podatki iz polj in računanje statistike
 
-        series.setTitle("Odmerki inzulina");
-        graph.getLegendRenderer().setVisible(true);
-        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+            Double min;
+            Double max;
+            Double avg = 0.0;
+            Double avg10 = 0.0;
 
-        graph.addSeries(series);
+            Integer stevec = 0;
+            LineGraphSeries<DataPoint> series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
+
+            DataPoint dpoint;
+            if (vsiVnosi.length > 10) {
+                min = kolicina[kolicina.length - 10];
+                max = kolicina[kolicina.length - 10];
+
+                for (int i = vsiVnosi.length - 10; i < vsiVnosi.length; i++) {
+                    dpoint = new DataPoint(i, kolicina[i]);
+                    series.appendData(dpoint, true, 10);
+
+                    if (kolicina[i] < min) min = kolicina[i];
+                    if (kolicina[i] > max) max = kolicina[i];
+                    avg10 += kolicina[i];
+                    stevec++;
+                }
+            } else {
+                min = kolicina[0];
+                max = kolicina[0];
+                for (int i = 0; i < vsiVnosi.length; i++) {
+                    dpoint = new DataPoint(i, kolicina[i]);
+                    series.appendData(dpoint, true, 10);
+
+                    if (kolicina[i] < min) min = kolicina[i];
+                    if (kolicina[i] > max) max = kolicina[i];
+                    avg10 += kolicina[i];
+                    stevec++;
+                }
+            }
+            avg10 = avg10 / stevec;
+
+            series.setTitle("Odmerki inzulina");
+            graph.getLegendRenderer().setVisible(true);
+            graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+            graph.addSeries(series);
 
         /*-----Izris statistike----------*/
-        stevec = 0;
-        for(int i = 0; i < kolicina.length; i++)
-        {
-            avg += kolicina[i];
-            stevec++;
+            stevec = 0;
+            for (int i = 0; i < kolicina.length; i++) {
+                avg += kolicina[i];
+                stevec++;
+            }
+            avg = avg / stevec;
+
+            //Izpis
+            DecimalFormat dfFormat = new DecimalFormat("#.##");
+            avg = Double.valueOf(dfFormat.format(avg));
+            avg10 = Double.valueOf(dfFormat.format(avg10));
+
+            txtavgVseh.setText(avg.toString());
+            txtavg10.setText(avg10.toString());
+            txtmax.setText(max.toString());
+            txtmin.setText(min.toString());
         }
-        avg = avg / stevec;
+        else
+        {
+            txtavgVseh.setText("Ni zapisov");
+            txtavg10.setText("Ni zapisov");
+            txtmax.setText("Ni zapisov");
+            txtmin.setText("Ni zapisov");
+        }
 
-        //Izpis
-        DecimalFormat dfFormat = new DecimalFormat("#.##");
-        avg = Double.valueOf(dfFormat.format(avg));
-        avg10 = Double.valueOf(dfFormat.format(avg10));
-
-        txtavgVseh.setText(avg.toString());
-        txtavg10.setText(avg10.toString());
-        txtmax.setText(max.toString());
-        txtmin.setText(min.toString());
 
     }
 

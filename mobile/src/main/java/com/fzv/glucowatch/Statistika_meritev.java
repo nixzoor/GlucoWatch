@@ -45,95 +45,94 @@ public class Statistika_meritev extends ActionBarActivity {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
         Meritev [] vseMeritve = dbHandler.vrniVseMeritve();
 
-        Double [] vrednostimeritev = new Double[vseMeritve.length];
-        Date [] datumi = new Date[vseMeritve.length];
+        if(vseMeritve.length > 0) {
+            Double[] vrednostimeritev = new Double[vseMeritve.length];
+            Date[] datumi = new Date[vseMeritve.length];
 
-        Date d;
-        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
-        String temp = "";
-        for(int i = 0; i < vseMeritve.length; i++)
-        {
-            vrednostimeritev[i] = (Double)vseMeritve[i].getVrednostGlukoze();
-            temp = vseMeritve[i].getCasMeritve();
-            try
-            {
-                d = df.parse(vseMeritve[i].getCasMeritve());
-                datumi[i] = d;
+            Date d;
+            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
+            String temp = "";
+            for (int i = 0; i < vseMeritve.length; i++) {
+                vrednostimeritev[i] = (Double) vseMeritve[i].getVrednostGlukoze();
+                temp = vseMeritve[i].getCasMeritve();
+                try {
+                    d = df.parse(vseMeritve[i].getCasMeritve());
+                    datumi[i] = d;
+                } catch (ParseException e) {
+
+                }
             }
-            catch(ParseException e)
-            {
+            //UStvarjanje točk s podatki iz polj in računanje statistike
 
+
+            LineGraphSeries<DataPoint> series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
+
+            DataPoint dpoint;
+
+            Double min;
+            Double max;
+            Double avgVseh = 0.0;
+            Double avg = 0.0;
+            Integer stevec = 0;
+
+            if (vseMeritve.length > 10) {
+                min = vrednostimeritev[vseMeritve.length - 10];
+                max = vrednostimeritev[vseMeritve.length - 10];
+                for (int i = vseMeritve.length - 10; i < vseMeritve.length; i++) {
+                    dpoint = new DataPoint(i, vrednostimeritev[i]);
+                    series.appendData(dpoint, true, 10);
+
+                    if (vrednostimeritev[i] > max) max = vrednostimeritev[i];
+                    if (vrednostimeritev[i] < min) min = vrednostimeritev[i];
+                    avg += vrednostimeritev[i];
+                    stevec++;
+                }
+            } else {
+                min = vrednostimeritev[0];
+                max = vrednostimeritev[0];
+                for (int i = 0; i < vseMeritve.length; i++) {
+                    dpoint = new DataPoint(i, vrednostimeritev[i]);
+                    series.appendData(dpoint, true, 10);
+
+                    if (vrednostimeritev[i] > max) max = vrednostimeritev[i];
+                    if (vrednostimeritev[i] < min) min = vrednostimeritev[i];
+                    avg += vrednostimeritev[i];
+                    stevec++;
+                }
             }
-        }
-        //UStvarjanje točk s podatki iz polj in računanje statistike
+            avg = avg / stevec;
 
+            series.setTitle("Vrednosti glukoze");
+            graph.getLegendRenderer().setVisible(true);
+            graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
-
-        DataPoint dpoint;
-
-        Double min;
-        Double max;
-        Double avgVseh = 0.0;
-        Double avg = 0.0;
-        Integer stevec = 0;
-
-        if(vseMeritve.length>10)
-        {
-            min = vrednostimeritev[vseMeritve.length-10];
-            max = vrednostimeritev[vseMeritve.length-10];
-            for(int i = vseMeritve.length-10; i < vseMeritve.length; i++)
-            {
-                dpoint = new DataPoint(i, vrednostimeritev[i]);
-                series.appendData(dpoint,true,10);
-
-                if(vrednostimeritev[i] > max)max = vrednostimeritev[i];
-                if(vrednostimeritev[i] < min)min = vrednostimeritev[i];
-                avg += vrednostimeritev[i];
-                stevec++;
-            }
-        }
-        else
-        {
-            min = vrednostimeritev[0];
-            max = vrednostimeritev[0];
-            for(int i = 0; i < vseMeritve.length; i++)
-            {
-                dpoint = new DataPoint(i, vrednostimeritev[i]);
-                series.appendData(dpoint,true,10);
-
-                if(vrednostimeritev[i] > max)max = vrednostimeritev[i];
-                if(vrednostimeritev[i] < min)min = vrednostimeritev[i];
-                avg += vrednostimeritev[i];
-                stevec++;
-            }
-        }
-        avg = avg / stevec;
-
-        series.setTitle("Vrednosti glukoze");
-        graph.getLegendRenderer().setVisible(true);
-        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-
-        graph.addSeries(series);
+            graph.addSeries(series);
 
         /*------Statistika-------------*/
-        stevec = 0;
-        for(int i = 0; i < vrednostimeritev.length; i++)
-        {
-            avgVseh += vrednostimeritev[i];
-            stevec++;
-        }
-        avgVseh = avgVseh / stevec;
+            stevec = 0;
+            for (int i = 0; i < vrednostimeritev.length; i++) {
+                avgVseh += vrednostimeritev[i];
+                stevec++;
+            }
+            avgVseh = avgVseh / stevec;
 
         /*Izpis statistike*/
 
-        DecimalFormat dfFormat = new DecimalFormat("#.##");
-        avg = Double.valueOf(dfFormat.format(avg));
-        avgVseh = Double.valueOf(dfFormat.format(avgVseh));
-        txtavg10.setText(avg.toString());
-        txtavgVseh.setText(avgVseh.toString());
-        txtmax.setText(max.toString());
-        txtmin.setText(min.toString());
+            DecimalFormat dfFormat = new DecimalFormat("#.##");
+            avg = Double.valueOf(dfFormat.format(avg));
+            avgVseh = Double.valueOf(dfFormat.format(avgVseh));
+            txtavg10.setText(avg.toString());
+            txtavgVseh.setText(avgVseh.toString());
+            txtmax.setText(max.toString());
+            txtmin.setText(min.toString());
+        }
+        else
+        {
+            txtavg10.setText("Ni zapisov");
+            txtavgVseh.setText("Ni zapisov");
+            txtmax.setText("Ni zapisov");
+            txtmin.setText("Ni zapisov");
+        }
     }
 
 
@@ -164,6 +163,7 @@ public class Statistika_meritev extends ActionBarActivity {
         //Pridobitev podatkov iz tabele, ter sprememba v double, ter datum Date
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
         Meritev [] vseMeritve = dbHandler.vrniVseMeritve();
+
 
         Double [] vrednostimeritev = new Double[vseMeritve.length];
         Date [] datumi = new Date[vseMeritve.length];

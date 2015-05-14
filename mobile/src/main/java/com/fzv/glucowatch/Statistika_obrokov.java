@@ -41,105 +41,100 @@ public class Statistika_obrokov extends ActionBarActivity {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
         Obrok [] vsiObroki = dbHandler.vrniVseObroke();
 
-        Double [] procentOH = new Double[vsiObroki.length];
+        if(vsiObroki.length > 0) {
+            Double[] procentOH = new Double[vsiObroki.length];
 
 
-        Date d = new Date();
-        SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+            Date d = new Date();
+            SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
 
-        Date temp;
-        List<Double> povprecneDnevneVrednosti = new ArrayList<Double>();
+            Date temp;
+            List<Double> povprecneDnevneVrednosti = new ArrayList<Double>();
 
-        int stevec = 0;
-        Double vsota = 0.0;
-        try {
-            //Nastavimo začetni datum
-            temp = sf.parse(vsiObroki[0].getDatumCas());
+            int stevec = 0;
+            Double vsota = 0.0;
+            try {
+                //Nastavimo začetni datum
+                temp = sf.parse(vsiObroki[0].getDatumCas());
 
-            //Gremo skozi vse zapise
-            for(int i = 0; i < vsiObroki.length; i++)
-            {
+                //Gremo skozi vse zapise
+                for (int i = 0; i < vsiObroki.length; i++) {
 
-                d = sf.parse(vsiObroki[i].getDatumCas());
-                if (d.equals(temp))//Preverjamo če je obrok še v istem dnevu
-                {
-                    stevec++;
-                    vsota += vsiObroki[i].getOdstotekOH();
+                    d = sf.parse(vsiObroki[i].getDatumCas());
+                    if (d.equals(temp))//Preverjamo če je obrok še v istem dnevu
+                    {
+                        stevec++;
+                        vsota += vsiObroki[i].getOdstotekOH();
+                    } else {
+                        povprecneDnevneVrednosti.add(vsota / stevec);
+                        stevec = 1;
+                        vsota = 0.0;
+                        temp = sf.parse(vsiObroki[i].getDatumCas());
+                        vsota += vsiObroki[i].getOdstotekOH();
+                    }
+
+
                 }
-                else
-                {
-                    povprecneDnevneVrednosti.add(vsota / stevec);
-                    stevec = 1;
-                    vsota = 0.0;
-                    temp = sf.parse(vsiObroki[i].getDatumCas());
-                    vsota += vsiObroki[i].getOdstotekOH();
-                }
-
+                povprecneDnevneVrednosti.add(vsota / stevec);
+            } catch (Exception e) {
 
             }
-            povprecneDnevneVrednosti.add(vsota / stevec);
-        }
-        catch (Exception e)
-        {
-
-        }
 
 
-        //UStvarjanje točk s podatki iz polj
+            //UStvarjanje točk s podatki iz polj
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
+            LineGraphSeries<DataPoint> series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
 
-        DataPoint dPoint;
-        String testBesedilo = "";
+            DataPoint dPoint;
+            String testBesedilo = "";
 
-        Double avg10 = 0.0;
-        stevec = 0;
-        if(povprecneDnevneVrednosti.size()>10)
-        {
-            for(int i = povprecneDnevneVrednosti.size()-10; i < povprecneDnevneVrednosti.size();i++)
-            {
-                dPoint = new DataPoint(i, povprecneDnevneVrednosti.get(i));
-                series.appendData(dPoint,true,10);
-                testBesedilo += povprecneDnevneVrednosti.get(i).toString() + ", ";
+            Double avg10 = 0.0;
+            stevec = 0;
+            if (povprecneDnevneVrednosti.size() > 10) {
+                for (int i = povprecneDnevneVrednosti.size() - 10; i < povprecneDnevneVrednosti.size(); i++) {
+                    dPoint = new DataPoint(i, povprecneDnevneVrednosti.get(i));
+                    series.appendData(dPoint, true, 10);
+                    testBesedilo += povprecneDnevneVrednosti.get(i).toString() + ", ";
 
-                avg10 += povprecneDnevneVrednosti.get(i);
+                    avg10 += povprecneDnevneVrednosti.get(i);
+                    stevec++;
+                }
+            } else {
+                for (int i = 0; i < povprecneDnevneVrednosti.size(); i++) {
+                    dPoint = new DataPoint(i, povprecneDnevneVrednosti.get(i));
+                    series.appendData(dPoint, true, 10);
+                    testBesedilo += povprecneDnevneVrednosti.get(i).toString() + ", ";
+
+                    avg10 += povprecneDnevneVrednosti.get(i);
+                    stevec++;
+                }
+            }
+            avg10 = avg10 / stevec;
+            graph.addSeries(series);
+
+        /*------------Izracun in izris-----------------*/
+            stevec = 0;
+            Double avgvseh = 0.0;
+            for (Integer i = 0; i < povprecneDnevneVrednosti.size(); i++) {
+                avgvseh += povprecneDnevneVrednosti.get(i);
                 stevec++;
             }
+            avgvseh = avgvseh / stevec;
+
+            //Izris
+
+            DecimalFormat dfFormat = new DecimalFormat("#.##");
+            avg10 = Double.valueOf(dfFormat.format(avg10));
+            avgvseh = Double.valueOf(dfFormat.format(avgvseh));
+
+            txtavg.setText(avgvseh.toString() + " %");
+            txtavg10.setText(avg10.toString() + " %");
         }
         else
         {
-            for(int i = 0; i < povprecneDnevneVrednosti.size();i++)
-            {
-                dPoint = new DataPoint(i, povprecneDnevneVrednosti.get(i));
-                series.appendData(dPoint,true,10);
-                testBesedilo += povprecneDnevneVrednosti.get(i).toString() + ", ";
-
-                avg10 += povprecneDnevneVrednosti.get(i);
-                stevec++;
-            }
+            txtavg.setText("Ni zapisov");
+            txtavg10.setText("Ni zapisov");
         }
-        avg10 = avg10 / stevec;
-        graph.addSeries(series);
-
-        /*------------Izracun in izris-----------------*/
-        stevec = 0;
-        Double avgvseh = 0.0;
-        for(Integer i = 0; i < povprecneDnevneVrednosti.size(); i++)
-        {
-            avgvseh += povprecneDnevneVrednosti.get(i);
-            stevec++;
-        }
-        avgvseh = avgvseh / stevec;
-
-        //Izris
-
-        DecimalFormat dfFormat = new DecimalFormat("#.##");
-        avg10 = Double.valueOf(dfFormat.format(avg10));
-        avgvseh = Double.valueOf(dfFormat.format(avgvseh));
-
-        txtavg.setText(avgvseh.toString() + " %");
-        txtavg10.setText(avg10.toString() + " %");
-
 
     }
 
