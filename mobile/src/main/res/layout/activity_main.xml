@@ -4,66 +4,74 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ff00d4ff"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="261dp"
+        android:layout_height="43dp"
+        android:id="@+id/imageView"
+        android:background="@drawable/gluco" />
+
+    <FrameLayout
+        android:layout_width="355dp"
+        android:layout_height="143dp"
+        android:layout_weight="0.96">
+
+        <Button
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/Btn_obrok"
+            android:onClick="activityDodajObrok"
+            android:layout_gravity="left|top"
+            android:background="@drawable/dva" />
+
+        <Button
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/Btn_aktivnost"
+            android:onClick="activityDodajAktivnost"
+            android:layout_gravity="right|top"
+            android:background="@drawable/ena" />
+
+        <Button
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnVnosZdravila"
+            android:onClick="activityDodajVnosZdravila"
+            android:layout_gravity="left|bottom"
+            android:background="@drawable/striri" />
+
+        <Button
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/button9"
+            android:onClick="activityDodajMeritev"
+            android:layout_gravity="right|bottom"
+            android:background="@drawable/tri" />
+    </FrameLayout>
 
     <Button
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vnos obroka"
-        android:id="@+id/Btn_obrok"
-        android:onClick="activityDodajObrok" />
+        android:text="STATISTIKA"
+        android:onClick="activityStatistika"
+        android:id="@+id/textView11"
+        android:textColor="#ffffffff"
+        android:background="#ff00d4ff"
+        android:layout_gravity="center_horizontal"
+        android:textSize="22dp" />
 
     <Button
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vnos aktivnosti"
-        android:id="@+id/Btn_aktivnost"
-        android:layout_marginTop="38dp"
-        android:onClick="activityDodajAktivnost"
- />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Vnos meritve"
-        android:id="@+id/btnDodajMeritve"
-        android:layout_marginTop="38dp"
-        android:onClick="activityDodajMeritev"
- />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Vnos Uporabe zdravila"
-        android:id="@+id/btnVnosZdravila"
-        android:onClick="activityDodajVnosZdravila"
-        android:layout_marginTop="10dp"
- />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Podatki Uporabnika"
-        android:id="@+id/btnPodatkiUporabnika"
+        android:text="Podatki uporabnika"
         android:onClick="activityPodatkiUporabnika"
-
-
-        android:layout_marginTop="10dp"
- />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="testno obvestilo"
-        android:id="@+id/notificationBtn"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="354dp"
-        android:layout_height="wrap_content"
-        android:text="Statistika"
-        android:id="@+id/button4"
-        android:layout_centerHorizontal="true"
-        android:onClick="activityStatistika" />
+        android:id="@+id/textView11"
+        android:textColor="#ffffffff"
+        android:background="#ff00d4ff"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16dp" />
 
 </LinearLayout>
