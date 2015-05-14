@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.fzv.glucowatch.DodajanjeObroka">
+    tools:context="com.fzv.glucowatch.DodajanjeObroka"
+    android:background="#ff00d4ff">
 
 
     <EditText
@@ -18,13 +19,13 @@
         android:layout_toStartOf="@+id/button3" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dodaj obrok"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
         android:id="@+id/btnDodajObrok"
         android:onClick="dodajNovObrok"
         android:layout_below="@+id/txtProcentOH"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/pet" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +45,9 @@
         android:id="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#fffffefa"
+        android:textSize="18dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,36 +56,38 @@
         android:id="@+id/textView4"
         android:layout_below="@+id/btnMajhen"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="18dp"
+        android:textColor="#fffffefa" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Majhen"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:id="@+id/btnMajhen"
         android:onClick="spremeniVelikostObrokaMajhen"
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/sest" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Srednji"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:id="@+id/btnSrednji"
         android:onClick="spremeniVelikostObrokaSrednji"
         android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/sedem" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Velik"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:id="@+id/btnVelik"
         android:onClick="spremeniVelikostObrokaVelik"
         android:layout_below="@+id/textView3"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/osem" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -96,9 +101,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignLeft="@+id/btnVelik"
         android:layout_alignStart="@+id/btnVelik"
-        android:background="#ffffffff"
+        android:background="#ff00d4ff"
         android:textStyle="bold"
         android:layout_alignBottom="@+id/txtProcentOH"
-        android:onClick="NavodilaObrok" />
+        android:onClick="NavodilaObrok"
+        android:textColor="#ff34939f" />
 
 </RelativeLayout>
