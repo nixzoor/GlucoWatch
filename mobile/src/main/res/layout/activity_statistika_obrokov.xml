@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.fzv.glucowatch.Statistika_obrokov">
+    tools:context="com.fzv.glucowatch.Statistika_obrokov"
+    android:background="#ff00d4ff">
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
@@ -16,37 +17,46 @@
         android:layout_height="wrap_content"
         android:text="Povprečje zaužitih ogljikovih hidratov:"
         android:id="@+id/textView20"
+        android:textSize="16dp"
+        android:textColor="#fffffefa"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/txtPovprecjeOH"
+        android:textSize="17dp"
+        android:textColor="#fffffefa"
         android:layout_below="@+id/textView20"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Povprečje zaužitih ogljikovih hidratovi(zadnjih 10 dni): "
+        android:text="Povprečje zaužitih ogljikovih hidratov                                                    (zadnjih 10 dni): "
         android:id="@+id/textView23"
-        android:layout_below="@+id/textView20"
+        android:layout_marginTop="22dp"
+        android:textSize="16dp"
+        android:textColor="#fffffefa"
+        android:layout_below="@+id/txtPovprecjeOH"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp" />
+        android:gravity="center" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/txtPovprecjeOh10"
+        android:textSize="17dp"
+        android:textColor="#fffffefa"
         android:layout_below="@+id/textView23"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/txtPovprecjeOH"
+        android:layout_alignStart="@+id/txtPovprecjeOH"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,6 +66,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="51dp" />
+        android:layout_marginBottom="51dp"
+        android:textSize="17dp"
+        android:textColor="#fffffefa"
+        android:textStyle="bold" />
 
 </RelativeLayout>

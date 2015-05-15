@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.fzv.glucowatch.Statistika_meritev">
+    tools:context="com.fzv.glucowatch.Statistika_meritev"
+    android:background="#ff00d4ff">
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
@@ -18,74 +19,89 @@
         android:layout_height="wrap_content"
         android:text="Povprečna vrednost vseh meritev:   "
         android:id="@+id/textView12"
+        android:textSize="16dp"
+        android:textColor="#fffffefa"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/textViewAvgMeritev"
+        android:textSize="17dp"
+        android:textColor="#fffffefa"
         android:layout_below="@+id/textView12"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Maksimalna vrednost meritev (zadnjih 10 dni))"
+        android:text="Maksimalna vrednost meritev (zadnjih 10 dni):"
         android:id="@+id/textView13"
-        android:layout_below="@+id/textView14"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="26dp"
+        android:textSize="16dp"
+        android:textColor="#fffffefa"
+        android:layout_below="@+id/textViewavg10"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Povprečna vrednost vseh meritev(zadnjih 10 dni): "
+        android:text="Povprečna vrednost vseh meritev                                        (zadnjih 10 dni): "
         android:id="@+id/textView14"
-        android:layout_below="@+id/textView12"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp" />
+        android:textSize="16dp"
+        android:textColor="#fffffefa"
+        android:layout_below="@+id/textViewAvgMeritev"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:textAlignment="center"
+        android:textIsSelectable="false"
+        android:gravity="center" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/textViewavg10"
+        android:textSize="17dp"
+        android:textColor="#fffffefa"
         android:layout_below="@+id/textView14"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Minimalna vrednost meritev (zadnjih 10 dni))"
+        android:text="Minimalna vrednost meritev (zadnjih 10 dni):"
         android:id="@+id/textView16"
-        android:layout_marginTop="28dp"
-        android:layout_below="@+id/textView13"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="30dp"
+        android:textSize="16dp"
+        android:textColor="#fffffefa"
+        android:layout_below="@+id/textViewmax"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/textViewmax"
+        android:textSize="17dp"
+        android:textColor="#fffffefa"
         android:layout_below="@+id/textView13"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/textViewmin"
+        android:textSize="17dp"
+        android:textColor="#fffffefa"
         android:layout_below="@+id/textView16"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
 
 </RelativeLayout>
