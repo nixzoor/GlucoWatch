@@ -235,7 +235,7 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
                     // Do something with the selection
                 /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
                         Toast.LENGTH_SHORT).show();*/
-                    Tip.setText(items[item]);
+                    Zdravilo.setText(items[item]);
                 }
             });
             AlertDialog alert = builder.create();
@@ -257,7 +257,7 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
                     // Do something with the selection
                 /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
                         Toast.LENGTH_SHORT).show();*/
-                    Tip.setText(items[item]);
+                    Zdravilo.setText(items[item]);
                 }
             });
             AlertDialog alert = builder.create();
@@ -281,7 +281,7 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
                     // Do something with the selection
                 /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
                         Toast.LENGTH_SHORT).show();*/
-                    Tip.setText(items[item]);
+                    Zdravilo.setText(items[item]);
                 }
             });
             AlertDialog alert = builder.create();
