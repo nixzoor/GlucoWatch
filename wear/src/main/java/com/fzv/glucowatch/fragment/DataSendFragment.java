@@ -119,7 +119,7 @@ public class DataSendFragment extends Fragment {
                     sendData(node,"/insulin",((InsulinInput)fragments.get(0)).getCurrentValue().toString(),null);
                 if(((GlucoseInput)fragments.get(1)).getCurrentValue() != 0)
                     sendData(node,"/glucose",((GlucoseInput)fragments.get(1)).getCurrentValue().toString(),null);
-                if(((FoodInput)fragments.get(2)).getMealValue() != "Ni izbrano" && ((FoodInput)fragments.get(2)).getCarbohydratesValue() != "Ni izbrano")
+                if(!((FoodInput)fragments.get(2)).getMealValue().equals("ni izbrano") && !((FoodInput)fragments.get(2)).getCarbohydratesValue().equals("ni izbrano"))
                     sendData(node,"/food",((FoodInput)fragments.get(2)).getMealValue().toString(),((FoodInput)fragments.get(2)).getCarbohydratesValue().toString());
 
             }

@@ -1,12 +1,9 @@
 package com.fzv.glucowatch;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
 
 import com.fzv.glucowatch.Utils.WearableUtils;
 
@@ -36,7 +33,6 @@ public class MyAlarmService extends Service {
     @Override
     public void onStart(Intent intent, int startId)
     {
-
         WearableUtils.showNotificationWithConfirmation(getApplicationContext(), "Opozorilo", "Potrebno bo nekaj pojesti!!.");
     }
 
