@@ -33,6 +33,11 @@ public abstract class AbstractInputLayout extends Fragment {
 
     protected abstract void setImageIcon();
 
+
+    public Double getCurrentValue() {
+        return currentValue;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 

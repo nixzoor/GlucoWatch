@@ -9,6 +9,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.DataEvent;
+import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.DataItem;
+import com.google.android.gms.wearable.DataMap;
+import com.google.android.gms.wearable.DataMapItem;
+import com.google.android.gms.wearable.Wearable;
+
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
@@ -21,21 +31,30 @@ public class dodajanjeMeritve extends ActionBarActivity {
 
     TextView txtVse;
 
+    private GoogleApiClient googleApiClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodajanje_meritve);
-        vrednostGlukoze = (EditText)findViewById(R.id.editTextVrednstGlukoze);
-        txtVse = (TextView)findViewById(R.id.textViewVseMeritve);
+        vrednostGlukoze = (EditText) findViewById(R.id.editTextVrednstGlukoze);
+        txtVse = (TextView) findViewById(R.id.textViewVseMeritve);
 
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
-        Meritev [] vseMeritve = dbHandler.vrniVseMeritve();
+        Meritev[] vseMeritve = dbHandler.vrniVseMeritve();
         String text = "MERITVE: \n \n";
-        for(Integer i = 0; i < vseMeritve.length; i++)
-        {
-            text += vseMeritve[i].getCasMeritve() +" - Vrednost: " + vseMeritve[i].getVrednostGlukoze().toString() + "\n";
+        for (Integer i = 0; i < vseMeritve.length; i++) {
+            text += vseMeritve[i].getCasMeritve() + " - Vrednost: " + vseMeritve[i].getVrednostGlukoze().toString() + "\n";
         }
         txtVse.setText(text);
+
+        buildGoogleApi();
+    }
+
+    private void buildGoogleApi() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .build();
     }
 
 
@@ -61,10 +80,8 @@ public class dodajanjeMeritve extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void dodajMeritev(View view)
-    {
+    public void dodajMeritev(View view) {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
-
 
         Date d = new Date();
         SimpleDateFormat datumformat = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
@@ -76,15 +93,14 @@ public class dodajanjeMeritve extends ActionBarActivity {
         vrednostGlukoze.setText("");
         dbHandler.dodajMeritev(m);
 
-        Meritev [] vseMeritve = dbHandler.vrniVseMeritve();
+        Meritev[] vseMeritve = dbHandler.vrniVseMeritve();
         String text = "MERITVE: \n \n";
 
-        for(Integer i = 0; i < vseMeritve.length; i++)
-        {
-            text += vseMeritve[i].getCasMeritve() +" - Vrednost: " + vseMeritve[i].getVrednostGlukoze().toString() + "\n";
+        for (Integer i = 0; i < vseMeritve.length; i++) {
+            text += vseMeritve[i].getCasMeritve() + " - Vrednost: " + vseMeritve[i].getVrednostGlukoze().toString() + "\n";
         }
 
         txtVse.setText(text);
-
     }
+
 }

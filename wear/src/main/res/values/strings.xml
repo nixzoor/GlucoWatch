@@ -12,12 +12,15 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string-array name="meal_size">
+        <item>ni izbrano</item>
         <item>Majhna</item>
         <item>Srednja</item>
         <item>Velika</item>
     </string-array>
 
     <string-array name="carbohydrant_procents">
+        <item>ni izbrano</item>
+        <item>0%</item>
         <item>10%</item>
         <item>20%</item>
         <item>30%</item>
