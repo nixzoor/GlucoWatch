@@ -1,5 +1,7 @@
 package com.fzv.glucowatch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -122,10 +124,24 @@ public class Statistika_obrokov extends ActionBarActivity {
             avgvseh = avgvseh / stevec;
 
             //Izris
-
-            DecimalFormat dfFormat = new DecimalFormat("#.##");
-            avg10 = Double.valueOf(dfFormat.format(avg10));
-            avgvseh = Double.valueOf(dfFormat.format(avgvseh));
+            try {
+                DecimalFormat dfFormat = new DecimalFormat("#.##");
+                avg10 = Double.valueOf(dfFormat.format(avg10));
+                avgvseh = Double.valueOf(dfFormat.format(avgvseh));
+            }
+            catch (Exception ex)
+            {
+                /*AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                dlgAlert.setMessage("Napaka pri racunanju!!");
+                dlgAlert.setTitle("Napaka pri vnosu");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.create().show();*/
+            }
 
             txtavg.setText(avgvseh.toString() + " %");
             txtavg10.setText(avg10.toString() + " %");

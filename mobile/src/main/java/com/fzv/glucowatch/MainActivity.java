@@ -1,5 +1,7 @@
 package com.fzv.glucowatch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -28,8 +30,7 @@ public class MainActivity extends ActionBarActivity {
     private PendingIntent pendingIntent;
     private PendingIntent pendingIntent2;
     private PendingIntent pendingIntent3;
-    TextView t1;
-    TextView t2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,59 +42,116 @@ public class MainActivity extends ActionBarActivity {
         /*super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);*/
 
-        t1 = (TextView)findViewById(R.id.textView24);
-        t2 = (TextView)findViewById(R.id.textView25);
+        try
+        {
+            Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .getBoolean("isFirstRun", true);
 
-        DB_Handler dbhandler = new DB_Handler(this, null, null, 1);
-        CasObrokov [] c = dbhandler.vrniCaseObrokov();
+            if (isFirstRun) {
+                //show start activity
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
+                startActivity(new Intent(MainActivity.this, dodajanje_podatkov_uporabnika.class));
 
-        String cas1 = "20:50";
-        String cas2 = "20:52";
-        String cas3 = "15:55";
-        Intent myIntent;
-        AlarmManager alarmManager;
+            }
+            else
+            {
+                /************Zažene servise!****************/
 
-        Intent myIntent2;
-        AlarmManager alarmManager2;
+                DB_Handler dbhandler = new DB_Handler(this, null, null, 1);
+                CasObrokov [] c = dbhandler.vrniCaseObrokov();
+
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
+
+                String cas1 = "08:00";
+                String cas2 = "13:00";
+                String cas3 = "19:00";
+
+                try
+                {
+                    cas1 = c[0].getCasObroka();
+                    cas2 = c[1].getCasObroka();
+                    cas3 = c[2].getCasObroka();
+                }
+                catch (Exception ex)
+                {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                    dlgAlert.setMessage("Napaka pri formatiranju casa!!!");
+                    dlgAlert.setTitle("Napaka");
+                    dlgAlert.setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //dismiss the dialog
+                                }
+                            });
+                    dlgAlert.create().show();
+                }
+                Intent myIntent;
+                AlarmManager alarmManager;
+
+                Intent myIntent2;
+                AlarmManager alarmManager2;
 
 
-        Integer minute;
-        Integer ure;
-        try {
-            ure = Integer.parseInt(cas1.substring(0,2));
-            minute = Integer.parseInt(cas1.substring(3));
-            calendar.set(Calendar.MINUTE, minute);
-            calendar.set(Calendar.HOUR_OF_DAY, ure);
-            calendar.set(Calendar.SECOND, 0);
+                Integer minute;
+                Integer ure;
+                try {
+                    ure = Integer.parseInt(cas1.substring(0,2));
+                    minute = Integer.parseInt(cas1.substring(3));
+                    calendar.set(Calendar.MINUTE, minute);
+                    calendar.set(Calendar.HOUR_OF_DAY, ure);
+                    calendar.set(Calendar.SECOND, 0);
 
-            myIntent = new Intent(MainActivity.this, MyReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+                    myIntent = new Intent(MainActivity.this, MyReceiver.class);
+                    pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
 
-            alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+                    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
-            /************************/
+                    /************************/
 
-            ure = Integer.parseInt(cas2.substring(0,2));
-            minute = Integer.parseInt(cas2.substring(3));
-            calendar.set(Calendar.MINUTE, minute);
-            calendar.set(Calendar.HOUR_OF_DAY, ure);
-            calendar.set(Calendar.SECOND, 0);
+                    ure = Integer.parseInt(cas2.substring(0,2));
+                    minute = Integer.parseInt(cas2.substring(3));
+                    calendar.set(Calendar.MINUTE, minute);
+                    calendar.set(Calendar.HOUR_OF_DAY, ure);
+                    calendar.set(Calendar.SECOND, 0);
 
-            myIntent = new Intent(MainActivity.this, MyReceiver2.class);
-            pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+                    myIntent = new Intent(MainActivity.this, MyReceiver2.class);
+                    pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
 
-            alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+                    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+
+
+                    /******************************/
+
+                    ure = Integer.parseInt(cas3.substring(0,2));
+                    minute = Integer.parseInt(cas3.substring(3));
+                    calendar.set(Calendar.MINUTE, minute);
+                    calendar.set(Calendar.HOUR_OF_DAY, ure);
+                    calendar.set(Calendar.SECOND, 0);
+
+                    myIntent = new Intent(MainActivity.this, MyReceiver3.class);
+                    pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+
+                    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
             /*Toast.makeText(getApplicationContext(), "Servis zagnan!",
                     Toast.LENGTH_SHORT).show();
 
             t1.setText(minute.toString());
             t2.setText(ure.toString());*/
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                    .putBoolean("isFirstRun", false).commit();
         }
         catch (Exception ex)
         {
@@ -113,17 +171,13 @@ public class MainActivity extends ActionBarActivity {
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);*/
 
+
+
     }
 
 
     private void testNotification() {
-        Button notificationButton = (Button) findViewById(R.id.notificationBtn);
-        notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WearableUtils.showNotificationWithConfirmation(getApplicationContext(),"Opozorilo","Potrebno bo nekaj pojesti.");
-            }
-        });
+
     }
 
 

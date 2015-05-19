@@ -1,5 +1,7 @@
 package com.fzv.glucowatch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -46,85 +48,143 @@ public class Statistika_meritev extends ActionBarActivity {
         Meritev [] vseMeritve = dbHandler.vrniVseMeritve();
 
         if(vseMeritve.length > 0) {
+
             Double[] vrednostimeritev = new Double[vseMeritve.length];
             Date[] datumi = new Date[vseMeritve.length];
+            try {
 
-            Date d;
-            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
-            String temp = "";
-            for (int i = 0; i < vseMeritve.length; i++) {
-                vrednostimeritev[i] = (Double) vseMeritve[i].getVrednostGlukoze();
-                temp = vseMeritve[i].getCasMeritve();
-                try {
-                    d = df.parse(vseMeritve[i].getCasMeritve());
-                    datumi[i] = d;
-                } catch (ParseException e) {
+                Date d;
+                SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
+                String temp = "";
+                for (int i = 0; i < vseMeritve.length; i++) {
+                    vrednostimeritev[i] = (Double) vseMeritve[i].getVrednostGlukoze();
+                    temp = vseMeritve[i].getCasMeritve();
+                    try {
+                        d = df.parse(vseMeritve[i].getCasMeritve());
+                        datumi[i] = d;
+                    } catch (ParseException e) {
 
+                    }
                 }
+            } catch (Exception ex) {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                dlgAlert.setMessage("Napaka pri prvem delu!");
+                dlgAlert.setTitle("Napaka pri vnosu");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.create().show();
             }
             //UStvarjanje točk s podatki iz polj in računanje statistike
 
 
-            LineGraphSeries<DataPoint> series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
-
-            DataPoint dpoint;
-
-            Double min;
-            Double max;
+            Double min = 0.0;
+            Double max = 0.0;
             Double avgVseh = 0.0;
             Double avg = 0.0;
             Integer stevec = 0;
+            try {
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<com.jjoe64.graphview.series.DataPoint>();
 
-            if (vseMeritve.length > 10) {
-                min = vrednostimeritev[vseMeritve.length - 10];
-                max = vrednostimeritev[vseMeritve.length - 10];
-                for (int i = vseMeritve.length - 10; i < vseMeritve.length; i++) {
-                    dpoint = new DataPoint(i, vrednostimeritev[i]);
-                    series.appendData(dpoint, true, 10);
+                DataPoint dpoint;
 
-                    if (vrednostimeritev[i] > max) max = vrednostimeritev[i];
-                    if (vrednostimeritev[i] < min) min = vrednostimeritev[i];
-                    avg += vrednostimeritev[i];
-                    stevec++;
+
+                if (vseMeritve.length > 10) {
+                    min = vrednostimeritev[vseMeritve.length - 10];
+                    max = vrednostimeritev[vseMeritve.length - 10];
+                    for (int i = vseMeritve.length - 10; i < vseMeritve.length; i++) {
+                        dpoint = new DataPoint(i, vrednostimeritev[i]);
+                        series.appendData(dpoint, true, 10);
+
+                        if (vrednostimeritev[i] > max) max = vrednostimeritev[i];
+                        if (vrednostimeritev[i] < min) min = vrednostimeritev[i];
+                        avg += vrednostimeritev[i];
+                        stevec++;
+                    }
+                } else {
+                    min = vrednostimeritev[0];
+                    max = vrednostimeritev[0];
+                    for (int i = 0; i < vseMeritve.length; i++) {
+                        dpoint = new DataPoint(i, vrednostimeritev[i]);
+                        series.appendData(dpoint, true, 10);
+
+                        if (vrednostimeritev[i] > max) max = vrednostimeritev[i];
+                        if (vrednostimeritev[i] < min) min = vrednostimeritev[i];
+                        avg += vrednostimeritev[i];
+                        stevec++;
+                    }
                 }
-            } else {
-                min = vrednostimeritev[0];
-                max = vrednostimeritev[0];
-                for (int i = 0; i < vseMeritve.length; i++) {
-                    dpoint = new DataPoint(i, vrednostimeritev[i]);
-                    series.appendData(dpoint, true, 10);
+                avg = avg / stevec;
 
-                    if (vrednostimeritev[i] > max) max = vrednostimeritev[i];
-                    if (vrednostimeritev[i] < min) min = vrednostimeritev[i];
-                    avg += vrednostimeritev[i];
-                    stevec++;
-                }
+                series.setTitle("Vrednosti glukoze");
+                graph.getLegendRenderer().setVisible(true);
+                graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+                graph.addSeries(series);
+            } catch (Exception ex) {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                dlgAlert.setMessage("Napaka pri drugem delu!");
+                dlgAlert.setTitle("Napaka pri vnosu");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.create().show();
             }
-            avg = avg / stevec;
-
-            series.setTitle("Vrednosti glukoze");
-            graph.getLegendRenderer().setVisible(true);
-            graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-
-            graph.addSeries(series);
 
         /*------Statistika-------------*/
-            stevec = 0;
-            for (int i = 0; i < vrednostimeritev.length; i++) {
-                avgVseh += vrednostimeritev[i];
-                stevec++;
+
+
+            try {
+                stevec = 0;
+                for (int i = 0; i < vrednostimeritev.length; i++) {
+                    avgVseh += vrednostimeritev[i];
+                    stevec++;
+                }
+                avgVseh = avgVseh / stevec;
+            } catch (Exception ex2) {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                dlgAlert.setMessage("Napaka pri izračunu!");
+                dlgAlert.setTitle("Napaka pri vnosu");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.create().show();
+
             }
-            avgVseh = avgVseh / stevec;
 
         /*Izpis statistike*/
 
-            DecimalFormat dfFormat = new DecimalFormat("#.##");
-            avg = Double.valueOf(dfFormat.format(avg));
-            avgVseh = Double.valueOf(dfFormat.format(avgVseh));
-            txtavg10.setText(avg.toString());
-            txtavgVseh.setText(avgVseh.toString());
-            txtmax.setText(max.toString());
-            txtmin.setText(min.toString());
+            try {
+                DecimalFormat dfFormat = new DecimalFormat("#.##");
+                avg = Double.valueOf(dfFormat.format(avg));
+                avgVseh = Double.valueOf(dfFormat.format(avgVseh));
+            }
+            catch (Exception ex)
+            {
+                /*AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                dlgAlert.setMessage("Napaka pri racunanju!!");
+                dlgAlert.setTitle("Napaka pri vnosu");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.create().show();*/
+            }
+                txtavg10.setText(avg.toString());
+                txtavgVseh.setText(avgVseh.toString());
+                txtmax.setText(max.toString());
+                txtmin.setText(min.toString());
         }
         else
         {

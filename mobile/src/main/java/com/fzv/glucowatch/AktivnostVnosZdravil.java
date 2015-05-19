@@ -1,5 +1,7 @@
 package com.fzv.glucowatch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,7 +39,7 @@ public class AktivnostVnosZdravil extends ActionBarActivity {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
         VnosZdravila[] vsiVnosi = dbHandler.vrniVseVnoseZdravil();
         String text = " DOSEDANJI VNOSI ZDRAVIL \n \n";
-        for(Integer i = 0; i < vsiVnosi.length; i++)
+        for(Integer i = vsiVnosi.length-1; i >= 0 && i > vsiVnosi.length - 11; i--)
         {
             text += vsiVnosi[i].getCasVnosa() + " - Zdravilo:" + vsiVnosi[i].getZdravilo() +" Odmerek: " + vsiVnosi[i].getOdmerek().toString() +"\n";
         }
@@ -75,20 +77,36 @@ public class AktivnostVnosZdravil extends ActionBarActivity {
         SimpleDateFormat datumformat = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
         String datum = datumformat.format(d);
 
+        try {
+            Integer odmerek = Integer.parseInt(EdittextOdmerek.getText().toString());
+            VnosZdravila vnos = new VnosZdravila(datum, EdittextZdravilo.getText().toString(), odmerek);
+            dbHandler.dodajVnosZdravila(vnos);
+            Toast.makeText(getApplicationContext(), "Vnos zdravil dodan",
+                    Toast.LENGTH_SHORT).show();
 
-        VnosZdravila vnos = new VnosZdravila(datum, EdittextZdravilo.getText().toString(), Integer.parseInt(EdittextOdmerek.getText().toString()));
+        }
+        catch (Exception ex)
+        {
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Pri vnosu je prišlo do napake. \nPreglejte podatke in poizkusite znova.");
+            dlgAlert.setTitle("Napaka pri vnosu");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.create().show();
+        }
 
 
-        dbHandler.dodajVnosZdravila(vnos);
-        Toast.makeText(getApplicationContext(), "Vnos zdravil dodan",
-                Toast.LENGTH_SHORT).show();
 
         VnosZdravila[] vsiVnosi = dbHandler.vrniVseVnoseZdravil();
 
         String text = " DOSEDANJI VNOSI ZDRAVIL \n \n";
 
 
-        for(Integer i = 0; i < vsiVnosi.length; i++)
+        for(Integer i = vsiVnosi.length-1; i >= 0 && i > vsiVnosi.length - 11; i--)
         {
             text += vsiVnosi[i].getCasVnosa() + " - Zdravilo:" + vsiVnosi[i].getZdravilo() +" Odmerek: " + vsiVnosi[i].getOdmerek().toString() +"\n";
         }

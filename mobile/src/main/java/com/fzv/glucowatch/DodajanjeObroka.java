@@ -36,7 +36,7 @@ public class DodajanjeObroka extends ActionBarActivity {
         DB_Handler dbHandler = new DB_Handler(this,null,null,1);
         Obrok[] vsiObrokiPolje = dbHandler.vrniVseObroke();
         String text = "VSI OBROKI: \n \n";
-        for(Integer i = 0; i < vsiObrokiPolje.length; i++)
+        for(Integer i = vsiObrokiPolje.length-1; i >= 0 && i > vsiObrokiPolje.length - 11; i--)
         {
             text +=vsiObrokiPolje[i].getDatumCas() + ": Velikost obroka - "+ vsiObrokiPolje[i].getVelikostObroka()+" Odostotek OH: "+ vsiObrokiPolje[i].getOdstotekOH().toString() +"\n";
         }
@@ -74,17 +74,31 @@ public class DodajanjeObroka extends ActionBarActivity {
         SimpleDateFormat datumformat = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
         String datum = datumformat.format(d);
 
-        Obrok o = new Obrok(datum,velikostObrokaGumb, Integer.parseInt(procentOH.getText().toString()));
+        try {
+            Obrok o = new Obrok(datum, velikostObrokaGumb, Integer.parseInt(procentOH.getText().toString()));
 
-        dbHandler.dodajObrok(o);
-        Toast.makeText(getApplicationContext(), "Obrok dodan",
-                Toast.LENGTH_SHORT).show();
-
+            dbHandler.dodajObrok(o);
+            Toast.makeText(getApplicationContext(), "Obrok dodan",
+                    Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception ex)
+        {
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Pri vnosu je prišlo do napake. \nPreglejte podatke in poizkusite znova.");
+            dlgAlert.setTitle("Napaka pri vnosu");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.create().show();
+        }
         Obrok[] vsiObrokiPolje = dbHandler.vrniVseObroke();
 
         String text = "VSI OBROKI: \n \n";
 
-        for(Integer i = 0; i < vsiObrokiPolje.length; i++)
+        for(Integer i = vsiObrokiPolje.length-1; i >= 0 && i > vsiObrokiPolje.length - 11; i--)
         {
             text +=vsiObrokiPolje[i].getDatumCas() + ": Velikost obroka - "+ vsiObrokiPolje[i].getVelikostObroka()+" Odostotek OH: "+ vsiObrokiPolje[i].getOdstotekOH().toString() +"\n";
         }

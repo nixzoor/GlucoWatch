@@ -101,6 +101,17 @@
             android:enabled="true"
             android:exported="true" >
         </receiver>
+        <receiver
+            android:name=".MyReceiver3"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+
+        <service
+            android:name=".MyAlarmService3"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>
