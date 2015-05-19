@@ -9,19 +9,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/GlucoTheme" >
-        <!--<activity-->
-            <!--android:name=".InsulinInput"-->
-            <!--android:label="@string/title_activity_food_input_activity" >-->
-        <!--</activity>-->
-        <!--<activity-->
-            <!--android:name=".GlucoseInput"-->
-            <!--android:label="@string/title_activity_glucose_input" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main" >
@@ -30,6 +17,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="android.support.wearable.activity.ConfirmationActivity">
         </activity>
     </application>
 

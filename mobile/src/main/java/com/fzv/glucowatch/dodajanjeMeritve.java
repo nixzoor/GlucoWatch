@@ -1,7 +1,5 @@
 package com.fzv.glucowatch;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,7 +31,7 @@ public class dodajanjeMeritve extends ActionBarActivity {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
         Meritev [] vseMeritve = dbHandler.vrniVseMeritve();
         String text = "MERITVE: \n \n";
-        for(Integer i = vseMeritve.length-1; i >= 0 && i > vseMeritve.length - 11; i--)
+        for(Integer i = 0; i < vseMeritve.length; i++)
         {
             text += vseMeritve[i].getCasMeritve() +" - Vrednost: " + vseMeritve[i].getVrednostGlukoze().toString() + "\n";
         }
@@ -72,31 +70,16 @@ public class dodajanjeMeritve extends ActionBarActivity {
         SimpleDateFormat datumformat = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
         String datum = datumformat.format(d);
 
-        try {
-            Meritev m = new Meritev(datum, Double.parseDouble(vrednostGlukoze.getText().toString()));
-            Toast.makeText(getApplicationContext(), "Meritev dodana",
-                    Toast.LENGTH_SHORT).show();
-            vrednostGlukoze.setText("");
-            dbHandler.dodajMeritev(m);
-        }
-        catch (Exception ex)
-        {
-            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Pri vnosu je prišlo do napake. \nPreglejte podatke in poizkusite znova.");
-            dlgAlert.setTitle("Napaka pri vnosu");
-            dlgAlert.setPositiveButton("Ok",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //dismiss the dialog
-                        }
-                    });
-            dlgAlert.create().show();
-        }
+        Meritev m = new Meritev(datum, Double.parseDouble(vrednostGlukoze.getText().toString()));
+        Toast.makeText(getApplicationContext(), "Meritev dodana",
+                Toast.LENGTH_SHORT).show();
+        vrednostGlukoze.setText("");
+        dbHandler.dodajMeritev(m);
 
         Meritev [] vseMeritve = dbHandler.vrniVseMeritve();
         String text = "MERITVE: \n \n";
 
-        for(Integer i = vseMeritve.length-1; i >= 0 && i > vseMeritve.length - 11; i--)
+        for(Integer i = 0; i < vseMeritve.length; i++)
         {
             text += vseMeritve[i].getCasMeritve() +" - Vrednost: " + vseMeritve[i].getVrednostGlukoze().toString() + "\n";
         }

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.fzv.glucowatch.R;
 
+import java.math.RoundingMode;
+
 /**
  * Created abstract class for input layout.
  * Created by Nik on 1.5.2015.
@@ -32,6 +34,11 @@ public abstract class AbstractInputLayout extends Fragment {
     abstract protected String getShortUnit();
 
     protected abstract void setImageIcon();
+
+
+    public Double getCurrentValue() {
+        return currentValue;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,7 +79,6 @@ public abstract class AbstractInputLayout extends Fragment {
     }
 
     //Converter for double numbers
-    //We cut zero at the end
     public static String convertToString(double d)
     {
         if(d == (long) d)
@@ -94,6 +100,8 @@ public abstract class AbstractInputLayout extends Fragment {
             public void onClick(View view) {
                 if(currentValue + value >= 0) {
                     currentValue += value;
+                    //getting some strange behaviour so we need to round number to one decimal
+                    currentValue = (double) Math.round(currentValue * 10) / 10;
                     setDisplayText();
                 }
             }
