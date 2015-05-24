@@ -15,37 +15,37 @@
         android:background="@drawable/gluco" />
 
     <FrameLayout
-        android:layout_width="355dp"
+        android:layout_width="324dp"
         android:layout_height="143dp"
-        android:layout_weight="0.96">
+        android:layout_weight="0.69">
 
         <Button
-            android:layout_width="161dp"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:id="@+id/Btn_obrok"
             android:onClick="activityDodajObrok"
             android:layout_gravity="left|top"
             android:background="@drawable/dva" />
 
         <Button
-            android:layout_width="161dp"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:id="@+id/Btn_aktivnost"
             android:onClick="activityDodajAktivnost"
             android:layout_gravity="right|top"
             android:background="@drawable/ena" />
 
         <Button
-            android:layout_width="161dp"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:id="@+id/btnVnosZdravila"
             android:onClick="activityDodajVnosZdravila"
             android:layout_gravity="left|bottom"
             android:background="@drawable/striri" />
 
         <Button
-            android:layout_width="161dp"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:id="@+id/button9"
             android:onClick="activityDodajMeritev"
             android:layout_gravity="right|bottom"
@@ -61,12 +61,12 @@
         android:textColor="#ffffffff"
         android:background="#ff00d4ff"
         android:layout_gravity="center_horizontal"
-        android:textSize="22dp" />
+        android:textSize="16dp" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Podatki uporabnika"
+        android:layout_height="35dp"
+        android:text="PODATKI UPORABNIKA"
         android:onClick="activityPodatkiUporabnika"
         android:id="@+id/textView11"
         android:textColor="#ffffffff"
