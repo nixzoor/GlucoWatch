@@ -40,7 +40,7 @@ public class DodajanjeAktivnosti extends ActionBarActivity {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
         Aktivnost [] a = dbHandler.vrniVseAktivnost();
         String vseAktivnosti = "AKTIVNOSTI \n \n";
-        for (Integer i = 0; i < a.length; i++)
+        for (Integer i = a.length-1; i >= 0 && i > a.length - 11; i--)
         {
             vseAktivnosti += "Aktivnost: "+a[i].getVrsta()+" Trajanje: " + a[i].getTrajanje() +" Intenzivnost: "+ a[i].getIntenzivnost() + "\n";
         }
@@ -74,23 +74,38 @@ public class DodajanjeAktivnosti extends ActionBarActivity {
     {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
 
-        Aktivnost aktivnost = new Aktivnost(vrsta.getText().toString(), Integer.parseInt(trajanje.getText().toString()), intenzivnost.getText().toString());
+        try {
+            Aktivnost aktivnost = new Aktivnost(vrsta.getText().toString(), Integer.parseInt(trajanje.getText().toString()), intenzivnost.getText().toString());
 
-        dbHandler.dodajAktivnost(aktivnost);
+            dbHandler.dodajAktivnost(aktivnost);
 
-        Toast.makeText(getApplicationContext(), "Aktivnost dodana",
-                Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Aktivnost dodana",
+                    Toast.LENGTH_SHORT).show();
 
-        vrsta.setText("");
-        intenzivnost.setText("");
-        trajanje.setText("");
+            vrsta.setText("");
+            intenzivnost.setText("");
+            trajanje.setText("");
+        }
+        catch (Exception ex)
+        {
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Pri vnosu je prišlo do napake. \nPreglejte podatke in poizkusite znova.");
+            dlgAlert.setTitle("Napaka pri vnosu");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.create().show();
+        }
 
 
         Aktivnost [] a = dbHandler.vrniVseAktivnost();
 
         String vseAktivnosti = "AKTIVNOSTI \n \n";
 
-        for (Integer i = 0; i < a.length; i++)
+        for (Integer i = a.length-1; i >= 0 && i > a.length - 11; i--)
         {
             vseAktivnosti += "Aktivnost: "+a[i].getVrsta()+" Trajanje: " + a[i].getTrajanje() +" Intenzivnost: "+ a[i].getIntenzivnost() + "\n";
         }
@@ -137,5 +152,19 @@ public class DodajanjeAktivnosti extends ActionBarActivity {
         AlertDialog alert = builder.create();
         alert.show();
 
+    }
+
+    public void NavodilaMoznosti(View view)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("Kliknite na prostor za vpisovanja, da se vam prikažejo možnosti.");
+        dlgAlert.setTitle("Navodilo");
+        dlgAlert.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //dismiss the dialog
+                    }
+                });
+        dlgAlert.create().show();
     }
 }

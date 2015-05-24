@@ -6,7 +6,6 @@ import com.fzv.glucowatch.R;
 
 public class GlucoseInput extends AbstractInputLayout {
 
-
     @Override
     protected Double getBottomValue() {
         return 0.1;

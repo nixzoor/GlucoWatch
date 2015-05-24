@@ -2,6 +2,7 @@ package com.fzv.glucowatch;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -66,13 +67,13 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
         try {
             DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
             Uporabnik vrnjen = dbHandler.vrniPodatkeUporabnika();
-            String podatki = "Ime: " + vrnjen.getIme() + "\n Priimek: " + vrnjen.getPriimek() + "\n Datum rojstva: " + vrnjen.getDatumRojstva() +
-                    "\n Spol: " + vrnjen.getSpol() + "\n Visina(cm): " + vrnjen.getVisina().toString() + "\n Teza(kg): " + vrnjen.getTeza().toString() +
-                    "\n Zaposlitveni status: " + vrnjen.getZapislitveniStatus() + "\n Tip bolezni: " + vrnjen.getTipBolezni() + "\n Osnovno zdravilo: " + vrnjen.getOsnovnoZdravilo();
+            String podatki = "Ime: " + vrnjen.getIme() + "\nPriimek: " + vrnjen.getPriimek() + "\nDatum rojstva: " + vrnjen.getDatumRojstva() +
+                    "\nSpol: " + vrnjen.getSpol() + "\nVisina(cm): " + vrnjen.getVisina().toString() + "\nTeza(kg): " + vrnjen.getTeza().toString() +
+                    "\nZaposlitveni status: " + vrnjen.getZapislitveniStatus() + "\nTip bolezni: " + vrnjen.getTipBolezni() + "\nOsnovno zdravilo: " + vrnjen.getOsnovnoZdravilo();
 
             CasObrokov[] obroki = dbHandler.vrniCaseObrokov();
 
-            podatki += "\nPREDVIDENI ČASI OBROKOV \n Predviden čas zajtrka: " + obroki[0].getCasObroka() +
+            podatki += "\nPREDVIDENI ČASI OBROKOV \nPredviden čas zajtrka: " + obroki[0].getCasObroka() +
                     "\nPredviden čas kosila: " + obroki[1].getCasObroka() +
                     "\nPredviden čas večerje: " + obroki[2].getCasObroka();
 
@@ -120,43 +121,61 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
     public void dodajPodatkeUporabnika(View view)
     {
         DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
+        try {
+            String DatumRojstva = DatRoj.getDayOfMonth() + "." + DatRoj.getMonth() + "." + DatRoj.getYear();
 
-        String DatumRojstva = DatRoj.getDayOfMonth() + "." + DatRoj.getMonth() + "." + DatRoj.getYear();
+            Uporabnik u = new Uporabnik(Ime.getText().toString(), Priimek.getText().toString(), DatumRojstva, Spol.getText().toString(), Double.parseDouble(Visina.getText().toString()), Double.parseDouble(Teza.getText().toString()), Status.getText().toString(), Tip.getText().toString(), Zdravilo.getText().toString());
+            dbHandler.dodajPodatkeUporabnika(u);
+            prikaz.setText("buckeee!");
 
-        Uporabnik u = new Uporabnik(Ime.getText().toString(),Priimek.getText().toString(),DatumRojstva,Spol.getText().toString(),Double.parseDouble(Visina.getText().toString()),Double.parseDouble(Teza.getText().toString()), Status.getText().toString(), Tip.getText().toString(), Zdravilo.getText().toString());
-        dbHandler.dodajPodatkeUporabnika(u);
-        prikaz.setText("buckeee!");
+            //Izbriše vse predhodnje čase obrokov
+            dbHandler.BrisiCaseObrokov();
+            //Dodajanje casa zajtrka
+            CasObrokov casObrokov = new CasObrokov(casZajtrka.getCurrentHour().toString() + ":" + casZajtrka.getCurrentMinute().toString(), "Zajtrk");
+            dbHandler.dodajCaseObrokov(casObrokov);
 
-        //Izbriše vse predhodnje čase obrokov
-        dbHandler.BrisiCaseObrokov();
-        //Dodajanje casa zajtrka
-        CasObrokov casObrokov = new CasObrokov(casZajtrka.getCurrentHour().toString() + ":" + casZajtrka.getCurrentMinute().toString(), "Zajtrk");
-        dbHandler.dodajCaseObrokov(casObrokov);
+            //Dodajanje casa kosila
+            casObrokov = new CasObrokov(casKosila.getCurrentHour().toString() + ":" + casKosila.getCurrentMinute().toString(), "Kosilo");
+            dbHandler.dodajCaseObrokov(casObrokov);
 
-        //Dodajanje casa kosila
-        casObrokov = new CasObrokov(casKosila.getCurrentHour().toString() + ":" + casKosila.getCurrentMinute().toString(), "Kosilo");
-        dbHandler.dodajCaseObrokov(casObrokov);
+            //Dodajanje casa večerje
+            casObrokov = new CasObrokov(casVecerje.getCurrentHour().toString() + ":" + casVecerje.getCurrentMinute().toString(), "Večerja");
+            dbHandler.dodajCaseObrokov(casObrokov);
 
-        //Dodajanje casa večerje
-        casObrokov = new CasObrokov(casVecerje.getCurrentHour().toString() + ":" + casVecerje.getCurrentMinute().toString(), "Večerja");
-        dbHandler.dodajCaseObrokov(casObrokov);
+            //Sporočilo da so podatki shranjeni
+            Toast.makeText(getApplicationContext(), "Podatki shranjeni",
+                    Toast.LENGTH_LONG).show();
 
-        //Sporočilo da so podatki shranjeni
-        Toast.makeText(getApplicationContext(), "Podatki shranjeni",
-                Toast.LENGTH_LONG).show();
+            Uporabnik vrnjen = dbHandler.vrniPodatkeUporabnika();
+            String podatki = "Ime: " + vrnjen.getIme() + "\nPriimek: " + vrnjen.getPriimek() + "\nDatum rojstva: " + vrnjen.getDatumRojstva() +
+                    "\nSpol: " + vrnjen.getSpol() + "\nVisina(cm): " + vrnjen.getVisina().toString() + "\nTeza(kg): " + vrnjen.getTeza().toString() +
+                    "\nZaposlitveni status: " + vrnjen.getZapislitveniStatus() + "\nTip bolezni: " + vrnjen.getTipBolezni() + "\nOsnovno zdravilo: " + vrnjen.getOsnovnoZdravilo();
 
-        Uporabnik vrnjen = dbHandler.vrniPodatkeUporabnika();
-        String podatki = "Ime: " + vrnjen.getIme() + "\n Priimek: " + vrnjen.getPriimek() + "\n Datum rojstva: " + vrnjen.getDatumRojstva() +
-                "\n Spol: " + vrnjen.getSpol() + "\n Visina(cm): " + vrnjen.getVisina().toString() + "\n Teza(kg): " + vrnjen.getTeza().toString() +
-                "\n Zaposlitveni status: " + vrnjen.getZapislitveniStatus() + "\n Tip bolezni: " + vrnjen.getTipBolezni() + "\n Osnovno zdravilo: " + vrnjen.getOsnovnoZdravilo();
+            CasObrokov[] obroki = dbHandler.vrniCaseObrokov();
 
-        CasObrokov[] obroki = dbHandler.vrniCaseObrokov();
+            podatki += "\nPREDVIDENI ČASI OBROKOV \n Predviden čas zajtrka: " + obroki[0].getCasObroka() +
+                    "\nPredviden čas kosila: " + obroki[1].getCasObroka() +
+                    "\nPredviden čas večerje: " + obroki[2].getCasObroka();
 
-        podatki += "\nPREDVIDENI ČASI OBROKOV \n Predviden čas zajtrka: " + obroki[0].getCasObroka() +
-                "\nPredviden čas kosila: " + obroki[1].getCasObroka() +
-                "\nPredviden čas večerje: " + obroki[2].getCasObroka();
+            prikaz.setText(podatki);
+            startActivity(new Intent(dodajanje_podatkov_uporabnika.this, MainActivity.class) );
+        }
+        catch (Exception ex)
+        {
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Napaka pri vnosu podatkov \nPopravite vpisane podatke in poizkusite znova.");
+            dlgAlert.setTitle("Napaka pri vnosu");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.create().show();
+        }
 
-        prikaz.setText(podatki);
+
+
     }
 
     public void IzborSpola(View view) {
@@ -235,7 +254,7 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
                     // Do something with the selection
                 /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
                         Toast.LENGTH_SHORT).show();*/
-                    Tip.setText(items[item]);
+                    Zdravilo.setText(items[item]);
                 }
             });
             AlertDialog alert = builder.create();
@@ -257,7 +276,7 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
                     // Do something with the selection
                 /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
                         Toast.LENGTH_SHORT).show();*/
-                    Tip.setText(items[item]);
+                    Zdravilo.setText(items[item]);
                 }
             });
             AlertDialog alert = builder.create();
@@ -281,7 +300,7 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
                     // Do something with the selection
                 /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
                         Toast.LENGTH_SHORT).show();*/
-                    Tip.setText(items[item]);
+                    Zdravilo.setText(items[item]);
                 }
             });
             AlertDialog alert = builder.create();
@@ -292,5 +311,19 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
 
 
 
+    }
+
+    public void NavodilaMoznosti(View view)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("Kliknite na prostor za vpisovanja, da se vam prikažejo možnosti.");
+        dlgAlert.setTitle("Navodilo");
+        dlgAlert.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //dismiss the dialog
+                    }
+                });
+        dlgAlert.create().show();
     }
 }

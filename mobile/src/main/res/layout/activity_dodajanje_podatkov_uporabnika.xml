@@ -92,7 +92,9 @@
                 android:layout_below="@+id/textViewSpol"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:onClick="IzborSpola" />
+                android:onClick="IzborSpola"
+                android:layout_toLeftOf="@+id/button11"
+                android:layout_toStartOf="@+id/button11" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -154,9 +156,9 @@
                 android:layout_below="@+id/textView10"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:onClick="IzborStatusa" />
+                android:onClick="IzborStatusa"
+                android:layout_toLeftOf="@+id/button12"
+                android:layout_toStartOf="@+id/button12" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -278,6 +280,66 @@
                 android:layout_alignParentLeft="true"
                 android:height="700px"
                 android:layout_alignParentStart="true" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" ?"
+                android:textSize="40px"
+                android:id="@+id/button11"
+                android:background="#ff00d4ff"
+                android:textStyle="bold"
+                android:onClick="NavodilaMoznosti"
+                android:textColor="#ff34939f"
+                android:layout_above="@+id/textView9"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" ?"
+                android:textSize="40px"
+                android:id="@+id/button12"
+                android:background="#ff00d4ff"
+                android:textStyle="bold"
+                android:onClick="NavodilaMoznosti"
+                android:textColor="#ff34939f"
+                android:layout_alignTop="@+id/editTextStatus"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" ?"
+                android:textSize="40px"
+                android:id="@+id/button13"
+                android:background="#ff00d4ff"
+                android:textStyle="bold"
+                android:onClick="NavodilaMoznosti"
+                android:textColor="#ff34939f"
+                android:layout_alignTop="@+id/editTextTip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" ?"
+                android:textSize="40px"
+                android:id="@+id/button14"
+                android:background="#ff00d4ff"
+                android:textStyle="bold"
+                android:onClick="NavodilaMoznosti"
+                android:textColor="#ff34939f"
+                android:layout_alignTop="@+id/editTextZdravilo"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
     </ScrollView>
