@@ -1,5 +1,7 @@
 package com.fzv.glucowatch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -70,12 +72,26 @@ public class dodajanjeMeritve extends ActionBarActivity {
         SimpleDateFormat datumformat = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
         String datum = datumformat.format(d);
 
-        Meritev m = new Meritev(datum, Double.parseDouble(vrednostGlukoze.getText().toString()));
-        Toast.makeText(getApplicationContext(), "Meritev dodana",
-                Toast.LENGTH_SHORT).show();
-        vrednostGlukoze.setText("");
-        dbHandler.dodajMeritev(m);
-
+        try {
+            Meritev m = new Meritev(datum, Double.parseDouble(vrednostGlukoze.getText().toString()));
+            Toast.makeText(getApplicationContext(), "Meritev dodana",
+                    Toast.LENGTH_SHORT).show();
+            vrednostGlukoze.setText("");
+            dbHandler.dodajMeritev(m);
+        }
+        catch(Exception ex)
+        {
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Pri vnosu je prišlo do napake. \nPreglejte podatke in poizkusite znova.\nDecimalna Števila zapisujte s piko");
+            dlgAlert.setTitle("Napaka pri vnosu");
+            dlgAlert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                        }
+                    });
+            dlgAlert.create().show();
+        }
         Meritev [] vseMeritve = dbHandler.vrniVseMeritve();
         String text = "MERITVE: \n \n";
 

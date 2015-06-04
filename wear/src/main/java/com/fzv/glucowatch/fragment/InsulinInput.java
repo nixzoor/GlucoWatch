@@ -35,7 +35,7 @@ public class InsulinInput extends AbstractInputLayout {
     @Override
     protected void setImageIcon() {
         ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.insulin_icon);
+        //imageView.setImageResource(R.drawable.insulin_icon);
         imageView.getLayoutParams().height = 35;
         imageView.getLayoutParams().width = 90;
     }

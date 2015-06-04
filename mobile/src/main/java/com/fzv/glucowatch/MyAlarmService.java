@@ -37,7 +37,7 @@ public class MyAlarmService extends Service {
     public void onStart(Intent intent, int startId)
     {
 
-        WearableUtils.showNotificationWithConfirmation(getApplicationContext(), "Opozorilo", "Potrebno bo nekaj pojesti!!.");
+        WearableUtils.showNotificationWithConfirmation(getApplicationContext(), "Opozorilo", "Potrebno bo pojesti zajtrk");
     }
 
     @Override
