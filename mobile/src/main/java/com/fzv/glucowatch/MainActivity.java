@@ -54,11 +54,11 @@ public class MainActivity extends ActionBarActivity {
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
 
-            String cas1 = "07:00";
-            String cas2 = "13:00";
-            String cas3 = "18:00";
+            String cas1 = "07:36";
+            String cas2 = "07:37";
+            String cas3 = "07:38";
 
-            try
+            /*try
             {
                 cas1 = c[0].getCasObroka();
                 cas2 = c[1].getCasObroka();
@@ -66,23 +66,37 @@ public class MainActivity extends ActionBarActivity {
             }
             catch(Exception ex)
             {
-
-            }
+                Toast.makeText(getApplicationContext(), "Napaka pri branju!!!" + ex.toString(),
+                        Toast.LENGTH_LONG).show();
+            }*/
             Intent myIntent;
             AlarmManager alarmManager;
 
             Intent myIntent2;
             AlarmManager alarmManager2;
 
+            Intent myIntent3;
+            AlarmManager alarmManager3;
+
 
             Integer minute;
             Integer ure;
             try {
-                ure = Integer.parseInt(cas1.substring(0,2));
-                minute = Integer.parseInt(cas1.substring(3));
+
+                if(cas1.length() == 5)//Ker ne moremo parsati npr števila 05:...
+                {
+                    ure = Integer.parseInt(cas1.substring(0,2));
+                    minute = Integer.parseInt(cas1.substring(3));
+                }
+                else
+                {
+                    ure = Integer.parseInt(cas1.substring(0,1));
+                    minute = Integer.parseInt(cas1.substring(2));
+                }
+
                 calendar.set(Calendar.MINUTE, minute);
                 calendar.set(Calendar.HOUR_OF_DAY, ure);
-                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.SECOND, 2);
 
                 myIntent = new Intent(MainActivity.this, MyReceiver.class);
                 pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
@@ -90,43 +104,62 @@ public class MainActivity extends ActionBarActivity {
                 alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
-                /************************/
-
-                ure = Integer.parseInt(cas3.substring(0,2));
-                minute = Integer.parseInt(cas3.substring(3));
-                calendar.set(Calendar.MINUTE, minute);
-                calendar.set(Calendar.HOUR_OF_DAY, ure);
-                calendar.set(Calendar.SECOND, 0);
-
-                myIntent = new Intent(MainActivity.this, MyReceiver3.class);
-                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
-
-                alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
                 /****************************/
 
-                ure = Integer.parseInt(cas2.substring(0,2));
-                minute = Integer.parseInt(cas2.substring(3));
+                if(cas1.length() == 5)//Ker ne moremo parsati npr števila 05:...
+                {
+                    ure = Integer.parseInt(cas1.substring(0,2));
+                    minute = Integer.parseInt(cas1.substring(3));
+                }
+                else
+                {
+                    ure = Integer.parseInt(cas1.substring(0,1));
+                    minute = Integer.parseInt(cas1.substring(2));
+                }
                 calendar.set(Calendar.MINUTE, minute);
                 calendar.set(Calendar.HOUR_OF_DAY, ure);
-                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.SECOND, 2);
 
-                myIntent = new Intent(MainActivity.this, MyReceiver2.class);
-                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+                myIntent2 = new Intent(MainActivity.this, MyReceiver2.class);
+                pendingIntent2 = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent2, 0);
 
-                alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+                alarmManager2 = (AlarmManager) getSystemService(ALARM_SERVICE);
+                alarmManager2.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent2);
+                /************************/
 
-            /*Toast.makeText(getApplicationContext(), "Servis zagnan!",
+                if(cas1.length() == 5)//Ker ne moremo parsati npr števila 05:...
+                {
+                    ure = Integer.parseInt(cas1.substring(0,2));
+                    minute = Integer.parseInt(cas1.substring(3));
+                }
+                else
+                {
+                    ure = Integer.parseInt(cas1.substring(0,1));
+                    minute = Integer.parseInt(cas1.substring(2));
+                }
+                calendar.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.HOUR_OF_DAY, ure);
+                calendar.set(Calendar.SECOND, 2);
+
+                myIntent3 = new Intent(MainActivity.this, MyReceiver3.class);
+                pendingIntent3 = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent3, 0);
+
+                alarmManager3 = (AlarmManager) getSystemService(ALARM_SERVICE);
+                alarmManager3.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent3);
+
+
+
+            Toast.makeText(getApplicationContext(), "Servis zagnan!",
                     Toast.LENGTH_SHORT).show();
-
+/*
             t1.setText(minute.toString());
             t2.setText(ure.toString());*/
             }
             catch (Exception ex)
             {
-
+                Toast.makeText(getApplicationContext(), "Napaka pri zagonu servisa!" + ex.toString(),
+                        Toast.LENGTH_LONG).show();
             }
         }
 

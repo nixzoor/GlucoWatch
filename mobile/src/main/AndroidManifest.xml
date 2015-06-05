@@ -92,6 +92,18 @@
             android:enabled="true"
             android:exported="true" >
         </receiver>
+
+        <service
+            android:name=".MyAlarmService3"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <receiver
+            android:name=".MyReceiver3"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
         <!--service which listen for event (in our case: OnReciveMessage)-->
                 <service
                     android:name="com.fzv.glucowatch.service.WearableDataService" >
