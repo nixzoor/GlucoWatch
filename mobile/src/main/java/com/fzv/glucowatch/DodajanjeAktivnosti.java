@@ -1,23 +1,15 @@
+
 package com.fzv.glucowatch;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.app.Dialog;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
 import android.widget.Toast;
 
 public class DodajanjeAktivnosti extends ActionBarActivity {

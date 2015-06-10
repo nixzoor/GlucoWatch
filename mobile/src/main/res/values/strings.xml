@@ -16,5 +16,6 @@
     <string name="title_activity_statistika_aktivnosti">Statistika aktivnosti</string>
     <string name="title_activity_statistika_obrokov">Statistika obrokov</string>
     <string name="title_activity_statistika_zdravil">Statistika vnosov zdravil</string>
+    <string name="title_activity_confirmation_activity">confirmation_activity</string>
 
 </resources>

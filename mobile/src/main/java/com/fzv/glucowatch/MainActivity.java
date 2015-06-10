@@ -1,26 +1,19 @@
 package com.fzv.glucowatch;
 
 import android.content.Intent;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.fzv.glucowatch.Utils.WearableUtils;
-
-import org.w3c.dom.Text;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -33,6 +26,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.cancelAll();
 
         //testNotification();
 
