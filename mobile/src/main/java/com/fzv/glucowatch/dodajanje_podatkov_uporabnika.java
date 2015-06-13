@@ -1,6 +1,8 @@
 package com.fzv.glucowatch;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -33,12 +35,18 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
     EditText Status;
     EditText Tip;
     EditText Zdravilo;
+    EditText UporabljenoZdravilo;
 
     TextView prikaz;
 
     TimePicker casZajtrka;
     TimePicker casKosila;
     TimePicker casVecerje;
+
+    //Za servise
+    private PendingIntent pendingIntent;
+    private PendingIntent pendingIntent2;
+    private PendingIntent pendingIntent3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,8 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
         Status = (EditText)findViewById(R.id.editTextStatus);
         Tip = (EditText)findViewById(R.id.editTextTip);
         Zdravilo = (EditText)findViewById(R.id.editTextZdravilo);
+        UporabljenoZdravilo = (EditText)findViewById(R.id.editTextUporabljenoZdravilo);
+
 
         prikaz = (TextView)findViewById(R.id.textViewPrikazPodatkovUporabnika);
 
@@ -67,10 +77,18 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
         try {
             DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
             Uporabnik vrnjen = dbHandler.vrniPodatkeUporabnika();
-            String podatki = "Ime: " + vrnjen.getIme() + "\nPriimek: " + vrnjen.getPriimek() + "\nDatum rojstva: " + vrnjen.getDatumRojstva() +
+            String podatki = "VAŠI PODATKI \nIme: " + vrnjen.getIme() + "\nPriimek: " + vrnjen.getPriimek() + "\nDatum rojstva: " + vrnjen.getDatumRojstva() +
                     "\nSpol: " + vrnjen.getSpol() + "\nVisina(cm): " + vrnjen.getVisina().toString() + "\nTeza(kg): " + vrnjen.getTeza().toString() +
                     "\nZaposlitveni status: " + vrnjen.getZapislitveniStatus() + "\nTip bolezni: " + vrnjen.getTipBolezni() + "\nOsnovno zdravilo: " + vrnjen.getOsnovnoZdravilo();
 
+            try
+            {
+                podatki += "\nUporabljeno Zdravilo: " + vrnjen.getUporabljeno_zdravilo() + "\n";
+            }
+            catch (Exception ex2)
+            {
+
+            }
             CasObrokov[] obroki = dbHandler.vrniCaseObrokov();
 
             podatki += "\nPREDVIDENI ČASI OBROKOV \nPredviden čas zajtrka: " + obroki[0].getCasObroka() +
@@ -79,6 +97,9 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
 
             prikaz.setText(podatki);
 
+
+            //Integer leto = vrnjen.getLetoRojstva().intValue();
+            DatRoj.updateDate(vrnjen.getLetoRojstva().intValue(), vrnjen.getMesecRojstva().intValue(), vrnjen.getDanRojstva().intValue());
             Ime.setText(vrnjen.getIme());
             Priimek.setText(vrnjen.getPriimek());
             Spol.setText(vrnjen.getSpol());
@@ -87,10 +108,43 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
             Status.setText(vrnjen.getZapislitveniStatus());
             Tip.setText(vrnjen.getTipBolezni());
             Zdravilo.setText(vrnjen.getOsnovnoZdravilo());
+
+            try
+            {
+                UporabljenoZdravilo.setText(vrnjen.getUporabljeno_zdravilo());
+            }
+            catch (Exception ex2)
+            {
+
+            }
+
+            //Nastavljanje časov na timepickerjih!
+            String[] cas = obroki[0].getCasObroka().split(":");
+            Integer ura = Integer.parseInt(cas[0]);
+            Integer minute = Integer.parseInt(cas[1]);
+
+            casZajtrka.setCurrentHour(ura);
+            casZajtrka.setCurrentMinute(minute);
+
+            //Za kosilo!
+            cas = obroki[1].getCasObroka().split(":");
+            ura = Integer.parseInt(cas[0]);
+            minute = Integer.parseInt(cas[1]);
+            casKosila.setCurrentHour(ura);
+            casKosila.setCurrentMinute(minute);
+            //Za večerjo
+            cas = obroki[2].getCasObroka().split(":");
+            ura = Integer.parseInt(cas[0]);
+            minute = Integer.parseInt(cas[1]);
+            casVecerje.setCurrentHour(ura);
+            casVecerje.setCurrentMinute(minute);
         }
         catch(Exception e)
         {
 
+            Toast.makeText(getApplicationContext(), e.toString(),
+                    Toast.LENGTH_LONG).show();
+            prikaz.setHeight(0);
         }
 
     }
@@ -124,9 +178,15 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
         try {
             String DatumRojstva = DatRoj.getDayOfMonth() + "." + DatRoj.getMonth() + "." + DatRoj.getYear();
 
-            Uporabnik u = new Uporabnik(Ime.getText().toString(), Priimek.getText().toString(), DatumRojstva, Spol.getText().toString(), Double.parseDouble(Visina.getText().toString()), Double.parseDouble(Teza.getText().toString()), Status.getText().toString(), Tip.getText().toString(), Zdravilo.getText().toString());
+            Double leto = DatRoj.getYear() * 1.0;
+            Double mesec = DatRoj.getMonth() * 1.0;
+            Double dan = DatRoj.getDayOfMonth() * 1.0;
+
+            Uporabnik u = new Uporabnik(Ime.getText().toString(), Priimek.getText().toString(), DatumRojstva, leto, mesec, dan, Spol.getText().toString(), Double.parseDouble(Visina.getText().toString()), Double.parseDouble(Teza.getText().toString()), Status.getText().toString(), Tip.getText().toString(), Zdravilo.getText().toString(), UporabljenoZdravilo.getText().toString());
+
+            //Uporabnik u2 = new Uporabnik(Ime.getText().toString(), Priimek.getText().toString(), DatumRojstva,DatRoj.getYear(), DatRoj.getMonth(), DatRoj.getDayOfMonth(), Spol.getText().toString(), Double.parseDouble(Visina.getText().toString()), Double.parseDouble(Teza.getText().toString()), Status.getText().toString(), Tip.getText().toString(), Zdravilo.getText().toString());
             dbHandler.dodajPodatkeUporabnika(u);
-            prikaz.setText("buckeee!");
+            //prikaz.setText("buckeee!");
 
             //Izbriše vse predhodnje čase obrokov
             dbHandler.BrisiCaseObrokov();
@@ -158,6 +218,9 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
                     "\nPredviden čas večerje: " + obroki[2].getCasObroka();
 
             prikaz.setText(podatki);
+
+
+
             startActivity(new Intent(dodajanje_podatkov_uporabnika.this, MainActivity.class) );
         }
         catch (Exception ex)

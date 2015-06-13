@@ -14,8 +14,9 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toLeftOf="@+id/button4"
+        android:layout_toStartOf="@+id/button4"
+        android:onClick="IzborZdravila" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -76,5 +77,19 @@
         android:textColor="#fffffefa"
         android:textSize="18dp"
         android:typeface="normal" />
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" ?"
+        android:textSize="40px"
+        android:id="@+id/button4"
+        android:background="#ff00d4ff"
+        android:textStyle="bold"
+        android:onClick="NavodilaMoznosti"
+        android:textColor="#ff34939f"
+        android:layout_alignBottom="@+id/editTextZdravilo"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
 </RelativeLayout>

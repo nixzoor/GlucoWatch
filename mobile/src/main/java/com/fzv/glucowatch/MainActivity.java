@@ -48,15 +48,18 @@ public class MainActivity extends ActionBarActivity {
         }
         else
         {
+            /************Zagon servisev******/
             DB_Handler dbhandler = new DB_Handler(this, null, null, 1);
             CasObrokov [] c = dbhandler.vrniCaseObrokov();
 
             Calendar calendar = Calendar.getInstance();
+            Calendar calendar2 = Calendar.getInstance();
+            Calendar calendar3 = Calendar.getInstance();
             SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
 
-            String cas1 = "07:36";
-            String cas2 = "07:37";
-            String cas3 = "07:38";
+            String cas1 = "20:15";
+            String cas2 = "20:17";
+            String cas3 = "20:18";
 
             /*try
             {
@@ -101,7 +104,7 @@ public class MainActivity extends ActionBarActivity {
                 myIntent = new Intent(MainActivity.this, MyReceiver.class);
                 pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
 
-                alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                alarmManager = (AlarmManager) getSystemService(MyAlarmService.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
 
@@ -117,15 +120,15 @@ public class MainActivity extends ActionBarActivity {
                     ure = Integer.parseInt(cas1.substring(0,1));
                     minute = Integer.parseInt(cas1.substring(2));
                 }
-                calendar.set(Calendar.MINUTE, minute);
-                calendar.set(Calendar.HOUR_OF_DAY, ure);
-                calendar.set(Calendar.SECOND, 2);
+                calendar2.set(Calendar.MINUTE, minute);
+                calendar2.set(Calendar.HOUR_OF_DAY, ure);
+                calendar2.set(Calendar.SECOND, 2);
 
                 myIntent2 = new Intent(MainActivity.this, MyReceiver2.class);
                 pendingIntent2 = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent2, 0);
 
-                alarmManager2 = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager2.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent2);
+                alarmManager2 = (AlarmManager) getSystemService(MyAlarmService2.ALARM_SERVICE);
+                alarmManager2.set(AlarmManager.RTC, calendar2.getTimeInMillis(), pendingIntent2);
                 /************************/
 
                 if(cas1.length() == 5)//Ker ne moremo parsati npr števila 05:...
@@ -138,20 +141,20 @@ public class MainActivity extends ActionBarActivity {
                     ure = Integer.parseInt(cas1.substring(0,1));
                     minute = Integer.parseInt(cas1.substring(2));
                 }
-                calendar.set(Calendar.MINUTE, minute);
-                calendar.set(Calendar.HOUR_OF_DAY, ure);
-                calendar.set(Calendar.SECOND, 2);
+                calendar3.set(Calendar.MINUTE, minute);
+                calendar3.set(Calendar.HOUR_OF_DAY, ure);
+                calendar3.set(Calendar.SECOND, 2);
 
                 myIntent3 = new Intent(MainActivity.this, MyReceiver3.class);
                 pendingIntent3 = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent3, 0);
 
-                alarmManager3 = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager3.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent3);
+                alarmManager3 = (AlarmManager) getSystemService(MyAlarmService3.ALARM_SERVICE);
+                alarmManager3.set(AlarmManager.RTC, calendar3.getTimeInMillis(), pendingIntent3);
 
 
 
-            Toast.makeText(getApplicationContext(), "Servis zagnan!",
-                    Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Servis zagnan!",
+                        Toast.LENGTH_SHORT).show();
 /*
             t1.setText(minute.toString());
             t2.setText(ure.toString());*/
@@ -161,6 +164,8 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Napaka pri zagonu servisa!" + ex.toString(),
                         Toast.LENGTH_LONG).show();
             }
+
+
         }
 
 

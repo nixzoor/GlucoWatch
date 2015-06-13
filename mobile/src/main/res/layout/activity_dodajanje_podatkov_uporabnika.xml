@@ -203,13 +203,34 @@
                 android:layout_alignRight="@+id/editTextTip"
                 android:layout_alignEnd="@+id/editTextTip"
                 android:onClick="IzborTerapije" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vase osnovno zdravilo (neobvezno polje)"
+                android:id="@+id/textViewUporabljenoZdravilo"
+                android:layout_below="@+id/editTextZdravilo"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#fffffefa"
+                android:textSize="18dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextUporabljenoZdravilo"
+                android:layout_below="@+id/textViewUporabljenoZdravilo"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/editTextTip"
+                android:layout_alignEnd="@+id/editTextTip"
+                android:onClick="IzborTerapije" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Predviden cas zajtrka"
                 android:id="@+id/textViewcasZajtrka"
-                android:layout_below="@+id/editTextZdravilo"
+                android:layout_below="@+id/editTextUporabljenoZdravilo"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:textColor="#fffffefa"
@@ -278,7 +299,7 @@
                 android:id="@+id/textViewPrikazPodatkovUporabnika"
                 android:layout_below="@+id/button2"
                 android:layout_alignParentLeft="true"
-                android:height="700px"
+                android:height="800px"
                 android:layout_alignParentStart="true" />
 
             <Button

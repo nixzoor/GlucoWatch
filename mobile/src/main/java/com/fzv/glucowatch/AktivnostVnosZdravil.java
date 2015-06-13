@@ -114,4 +114,65 @@ public class AktivnostVnosZdravil extends ActionBarActivity {
         PrikazVnosovZdravil.setText(text);
 
     }
+
+
+    public void IzborZdravila(View view) {
+
+        final CharSequence[] items = new CharSequence[1];
+
+        try
+        {
+            DB_Handler db = new DB_Handler(this, null, null, 1);
+            Uporabnik u = db.vrniPodatkeUporabnika();
+
+            if(u.getUporabljeno_zdravilo() == "" || u.getUporabljeno_zdravilo() == null)
+            {
+                AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+                dlgAlert.setMessage("Da se vam prikaže možnost, morate vpisati osnovno zdravilo pri svojih osebnih podatkih.");
+                dlgAlert.setTitle("Opozorilo");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.create().show();
+            }
+            else
+            {
+                items[0] = u.getUporabljeno_zdravilo();
+            }
+        }
+        catch(Exception ex)
+        {
+
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Vaše osnovno zdravilo");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+                /*Toast.makeText(getApplicationContext(), "Izbrali ste nekaj",
+                        Toast.LENGTH_SHORT).show();*/
+                EdittextZdravilo.setText(items[item]);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+    public void NavodilaMoznosti(View view)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("Kliknite na prostor za vpisovanja, da se vam prikaže vaše osnovno zdravilo.");
+        dlgAlert.setTitle("Navodilo");
+        dlgAlert.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //dismiss the dialog
+                    }
+                });
+        dlgAlert.create().show();
+    }
 }

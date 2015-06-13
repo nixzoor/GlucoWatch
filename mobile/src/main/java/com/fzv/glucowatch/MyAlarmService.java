@@ -7,6 +7,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.widget.Toast;
 
 import com.fzv.glucowatch.Utils.WearableUtils;
 
@@ -36,7 +37,8 @@ public class MyAlarmService extends Service {
     @Override
     public void onStart(Intent intent, int startId)
     {
-
+        Toast.makeText(getApplicationContext(), "ZAJTRK ALARM ZAGNAN!",
+                Toast.LENGTH_SHORT).show();
         WearableUtils.showNotificationWithConfirmation(getApplicationContext(), "Opozorilo", "Potrebno bo pojesti zajtrk");
     }
 

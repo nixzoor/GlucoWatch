@@ -10,6 +10,9 @@ public class Uporabnik {
     String ime;
     String priimek;
     String datumRojstva;
+    Double letoRojstva;
+    Double mesecRojstva;
+    Double danRojstva;
     String spol;
     Double visina;
     Double teza;
@@ -17,11 +20,12 @@ public class Uporabnik {
 
     String tipBolezni;
     String osnovnoZdravilo;
+    String uporabljeno_zdravilo;
 
     public Uporabnik() {
     }
 
-    public Uporabnik(String ime, String priimek, String datumRojstva, String spol, Double visina, Double teza, String zapislitveniStatus, String tipBolezni, String osnovnoZdravilo) {
+    public Uporabnik(String ime, String priimek, String datumRojstva, Double letoRojstva,Double mesecRojstva, Double danRojstva , String spol, Double visina, Double teza, String zapislitveniStatus, String tipBolezni, String osnovnoZdravilo) {
         this.ime = ime;
         this.priimek = priimek;
         this.datumRojstva = datumRojstva;
@@ -31,6 +35,21 @@ public class Uporabnik {
         this.zapislitveniStatus = zapislitveniStatus;
         this.tipBolezni = tipBolezni;
         this.osnovnoZdravilo = osnovnoZdravilo;
+    }
+    public Uporabnik(String ime, String priimek, String datumRojstva, Double letoRojstva,Double mesecRojstva, Double danRojstva , String spol, Double visina, Double teza, String zapislitveniStatus, String tipBolezni, String osnovnoZdravilo, String uporabljenoZdravio) {
+        this.ime = ime;
+        this.priimek = priimek;
+        this.datumRojstva = datumRojstva;
+        this.spol = spol;
+        this.visina = visina;
+        this.teza = teza;
+        this.zapislitveniStatus = zapislitveniStatus;
+        this.tipBolezni = tipBolezni;
+        this.osnovnoZdravilo = osnovnoZdravilo;
+        this.uporabljeno_zdravilo = uporabljenoZdravio;
+        this.letoRojstva = letoRojstva;
+        this.mesecRojstva = mesecRojstva;
+        this.danRojstva = danRojstva;
     }
 
     public String getIme() {
@@ -103,5 +122,37 @@ public class Uporabnik {
 
     public void setOsnovnoZdravilo(String osnovnoZdravilo) {
         this.osnovnoZdravilo = osnovnoZdravilo;
+    }
+
+    public Double getLetoRojstva() {
+        return letoRojstva;
+    }
+
+    public void setLetoRojstva(Double letoRojstva) {
+        this.letoRojstva = letoRojstva;
+    }
+
+    public Double getMesecRojstva() {
+        return mesecRojstva;
+    }
+
+    public void setMesecRojstva(Double mesecRojstva) {
+        this.mesecRojstva = mesecRojstva;
+    }
+
+    public Double getDanRojstva() {
+        return danRojstva;
+    }
+
+    public void setDanRojstva(Double danRojstva) {
+        this.danRojstva = danRojstva;
+    }
+
+    public String getUporabljeno_zdravilo() {
+        return uporabljeno_zdravilo;
+    }
+
+    public void setUporabljeno_zdravilo(String uporabljeno_zdravilo) {
+        this.uporabljeno_zdravilo = uporabljeno_zdravilo;
     }
 }

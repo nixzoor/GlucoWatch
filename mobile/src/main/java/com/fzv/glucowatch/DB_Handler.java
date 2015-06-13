@@ -82,8 +82,8 @@ public class DB_Handler extends SQLiteOpenHelper {
 
         //Za tabelo s podatki uporabnika
         String CREATE_podatkiUporabnika_TABLE = "CREATE TABLE " + TABLE_UPORABNIK + "("
-                + "ID_uporabnika INTEGER PRIMARY KEY, Ime TEXT, Priimek TEXT, Datum_rojstva TEXT,"
-                +" Spol TEXT, Visina NUMBER, Teza NUMBER, Status TEXT, Tip_bolezni TEXT, Osnovno_zdravilo TEXT )";
+                + "ID_uporabnika INTEGER PRIMARY KEY, Ime TEXT, Priimek TEXT, Datum_rojstva TEXT, Leto_rojstva NUMBER, Mesec_rojstva NUMBER, Dan_rojstva NUMBER,"
+                +" Spol TEXT, Visina NUMBER, Teza NUMBER, Status TEXT, Tip_bolezni TEXT, Osnovno_zdravilo TEXT, Uporabljeno_zdravilo TEXT )";
         db.execSQL(CREATE_podatkiUporabnika_TABLE);
 
         //Za tabelo cas obrokov
@@ -273,12 +273,17 @@ public class DB_Handler extends SQLiteOpenHelper {
         values.put("Ime", uporabnik.getIme());
         values.put("Priimek", uporabnik.getPriimek());
         values.put("Datum_rojstva" , uporabnik.getDatumRojstva());
+        values.put("Leto_rojstva", uporabnik.getLetoRojstva());
+        values.put("Mesec_rojstva", uporabnik.getMesecRojstva());
+        values.put("Dan_rojstva", uporabnik.getDanRojstva());
         values.put("Spol", uporabnik.getSpol());
         values.put("Visina", uporabnik.getVisina().toString());
         values.put("Teza", uporabnik.getTeza().toString());
         values.put("Status", uporabnik.getZapislitveniStatus());
         values.put("Tip_bolezni", uporabnik.getTipBolezni());
         values.put("Osnovno_zdravilo", uporabnik.getOsnovnoZdravilo());
+        values.put("Uporabljeno_zdravilo", uporabnik.getUporabljeno_zdravilo());
+
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_UPORABNIK, null, values);
@@ -301,12 +306,16 @@ public class DB_Handler extends SQLiteOpenHelper {
             u.setIme(c.getString(1));
             u.setPriimek(c.getString(2));
             u.setDatumRojstva(c.getString(3));
-            u.setSpol(c.getString(4));
-            u.setVisina(Double.parseDouble(c.getString(5)));
-            u.setTeza(Double.parseDouble(c.getString(6)));
-            u.setZapislitveniStatus(c.getString(7));
-            u.setTipBolezni(c.getString(8));
-            u.setOsnovnoZdravilo(c.getString(9));
+            u.setLetoRojstva(c.getDouble(4));
+            u.setMesecRojstva(c.getDouble(5));
+            u.setDanRojstva(c.getDouble(6));
+            u.setSpol(c.getString(7));
+            u.setVisina(Double.parseDouble(c.getString(8)));
+            u.setTeza(Double.parseDouble(c.getString(9)));
+            u.setZapislitveniStatus(c.getString(10));
+            u.setTipBolezni(c.getString(11));
+            u.setOsnovnoZdravilo(c.getString(12));
+            u.setUporabljeno_zdravilo(c.getString(13));
         }
 
         return  u;

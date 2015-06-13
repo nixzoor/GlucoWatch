@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import com.fzv.glucowatch.Utils.WearableUtils;
 
@@ -31,7 +32,8 @@ public class MyAlarmService3 extends Service {
     @Override
     public void onStart(Intent intent, int startId)
     {
-
+        Toast.makeText(getApplicationContext(), "Alarm Zagnan 3!",
+                Toast.LENGTH_SHORT).show();
         WearableUtils.showNotificationWithConfirmation(getApplicationContext(), "Opozorilo", "Ste ze pojedli večerjo? :)");
     }
 
