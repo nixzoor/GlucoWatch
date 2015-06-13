@@ -9,10 +9,12 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="261dp"
-        android:layout_height="43dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:id="@+id/imageView"
-        android:background="@drawable/gluco" />
+        android:background="@drawable/gluco"
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal" />
 
     <FrameLayout
         android:layout_width="match_parent"
