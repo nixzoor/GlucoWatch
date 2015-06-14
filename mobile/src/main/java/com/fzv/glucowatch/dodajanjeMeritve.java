@@ -2,6 +2,8 @@ package com.fzv.glucowatch;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Rect;
+import android.graphics.pdf.PdfDocument;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.lang.Object;
 
 
 public class dodajanjeMeritve extends ActionBarActivity {

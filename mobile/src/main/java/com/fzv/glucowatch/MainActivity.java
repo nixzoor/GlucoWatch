@@ -1,6 +1,7 @@
 package com.fzv.glucowatch;
 
 import android.content.Intent;
+import android.graphics.pdf.PdfDocument;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -34,9 +35,12 @@ public class MainActivity extends ActionBarActivity {
         Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
 
+
+
         if (isFirstRun) {
             //show start activity
-
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                    .putBoolean("isFirstRun", false).commit();
             startActivity(new Intent(MainActivity.this, dodajanje_podatkov_uporabnika.class));
         }
         else
@@ -48,106 +52,54 @@ public class MainActivity extends ActionBarActivity {
             Calendar calendar = Calendar.getInstance();
             Calendar calendar2 = Calendar.getInstance();
             Calendar calendar3 = Calendar.getInstance();
-            SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
 
-            String cas1 = "20:15";
-            String cas2 = "20:17";
-            String cas3 = "20:18";
 
-            /*try
-            {
-                cas1 = c[0].getCasObroka();
-                cas2 = c[1].getCasObroka();
-                cas3 = c[2].getCasObroka();
-            }
-            catch(Exception ex)
-            {
-                Toast.makeText(getApplicationContext(), "Napaka pri branju!!!" + ex.toString(),
-                        Toast.LENGTH_LONG).show();
-            }*/
+            //Pridobitev in nastavitev časa
+            //Nastavljanje časov na timepickerjih!
+
+            String[] cas = c[0].getCasObroka().split(":");
+            Integer ura = Integer.parseInt(cas[0]);
+            Integer minute = Integer.parseInt(cas[1]);
+            calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.HOUR_OF_DAY, ura);
+            calendar.set(Calendar.SECOND, 2);
+
+
             Intent myIntent;
             AlarmManager alarmManager;
 
-            Intent myIntent2;
-            AlarmManager alarmManager2;
 
-            Intent myIntent3;
-            AlarmManager alarmManager3;
-
-
-            Integer minute;
-            Integer ure;
             try {
 
-                if(cas1.length() == 5)//Ker ne moremo parsati npr števila 05:...
+
+
+                Calendar cTemp = Calendar.getInstance();
+                if(cTemp.get(Calendar.HOUR_OF_DAY) == calendar.get(Calendar.HOUR_OF_DAY) ||cTemp.get(Calendar.HOUR_OF_DAY) < calendar.get(Calendar.HOUR_OF_DAY))
                 {
-                    ure = Integer.parseInt(cas1.substring(0,2));
-                    minute = Integer.parseInt(cas1.substring(3));
+                    if(cTemp.get(Calendar.MINUTE) < calendar.get(Calendar.MINUTE))
+                    {
+                        Toast.makeText(getApplicationContext(), "Servis zagnan!",
+                                Toast.LENGTH_SHORT).show();
+
+                        myIntent = new Intent(MainActivity.this, MyReceiver.class);
+
+                        pendingIntent = PendingIntent.getBroadcast(this,0,myIntent,0);
+                        pendingIntent.cancel(); //Najprej zapremo
+                        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+
+                        alarmManager = (AlarmManager) getSystemService(MyAlarmService.ALARM_SERVICE);
+                        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+                    }
                 }
-                else
-                {
-                    ure = Integer.parseInt(cas1.substring(0,1));
-                    minute = Integer.parseInt(cas1.substring(2));
-                }
 
-                calendar.set(Calendar.MINUTE, minute);
-                calendar.set(Calendar.HOUR_OF_DAY, ure);
-                calendar.set(Calendar.SECOND, 2);
 
-                myIntent = new Intent(MainActivity.this, MyReceiver.class);
-                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
-
-                alarmManager = (AlarmManager) getSystemService(MyAlarmService.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
 
                 /****************************/
 
-                if(cas1.length() == 5)//Ker ne moremo parsati npr števila 05:...
-                {
-                    ure = Integer.parseInt(cas1.substring(0,2));
-                    minute = Integer.parseInt(cas1.substring(3));
-                }
-                else
-                {
-                    ure = Integer.parseInt(cas1.substring(0,1));
-                    minute = Integer.parseInt(cas1.substring(2));
-                }
-                calendar2.set(Calendar.MINUTE, minute);
-                calendar2.set(Calendar.HOUR_OF_DAY, ure);
-                calendar2.set(Calendar.SECOND, 2);
 
-                myIntent2 = new Intent(MainActivity.this, MyReceiver2.class);
-                pendingIntent2 = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent2, 0);
-
-                alarmManager2 = (AlarmManager) getSystemService(MyAlarmService2.ALARM_SERVICE);
-                alarmManager2.set(AlarmManager.RTC, calendar2.getTimeInMillis(), pendingIntent2);
-                /************************/
-
-                if(cas1.length() == 5)//Ker ne moremo parsati npr števila 05:...
-                {
-                    ure = Integer.parseInt(cas1.substring(0,2));
-                    minute = Integer.parseInt(cas1.substring(3));
-                }
-                else
-                {
-                    ure = Integer.parseInt(cas1.substring(0,1));
-                    minute = Integer.parseInt(cas1.substring(2));
-                }
-                calendar3.set(Calendar.MINUTE, minute);
-                calendar3.set(Calendar.HOUR_OF_DAY, ure);
-                calendar3.set(Calendar.SECOND, 2);
-
-                myIntent3 = new Intent(MainActivity.this, MyReceiver3.class);
-                pendingIntent3 = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent3, 0);
-
-                alarmManager3 = (AlarmManager) getSystemService(MyAlarmService3.ALARM_SERVICE);
-                alarmManager3.set(AlarmManager.RTC, calendar3.getTimeInMillis(), pendingIntent3);
-
-
-
-                Toast.makeText(getApplicationContext(), "Servis zagnan!",
-                        Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(getApplicationContext(), "Servis zagnan!",
+                        Toast.LENGTH_SHORT).show();*/
 /*
             t1.setText(minute.toString());
             t2.setText(ure.toString());*/
@@ -160,10 +112,6 @@ public class MainActivity extends ActionBarActivity {
 
 
         }
-
-
-        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                .putBoolean("isFirstRun", false).commit();
 
 
 

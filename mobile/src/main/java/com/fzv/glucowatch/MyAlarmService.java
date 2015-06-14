@@ -10,6 +10,8 @@ import android.app.Service;
 
 import com.fzv.glucowatch.Utils.WearableUtils;
 
+import java.util.Calendar;
+
 
 public class MyAlarmService extends Service {
     public MyAlarmService() {
@@ -34,10 +36,13 @@ public class MyAlarmService extends Service {
 
     @SuppressWarnings("static-access")
     @Override
-    public void onStart(Intent intent, int startId)
+    public int onStartCommand(Intent intent,int flags,int startId)
     {
+        DB_Handler dbHandler = new DB_Handler(this, null, null, 1);
+        CasObrokov[] cas = dbHandler.vrniCaseObrokov();
 
-        WearableUtils.showNotificationWithConfirmation(getApplicationContext(), "Opozorilo", "Potrebno bo pojesti zajtrk");
+        WearableUtils.showNotificationWithConfirmation(getApplicationContext(), "Opozorilo", "Ne pozabite na svoje glavne obroke\nZajtrk: " + cas[0].getCasObroka() + "\nKosilo: " + cas[1].getCasObroka() + "\nVecerja" + cas[2].getCasObroka());
+        return START_STICKY;
     }
 
     @Override

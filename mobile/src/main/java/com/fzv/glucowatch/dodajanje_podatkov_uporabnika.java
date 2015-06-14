@@ -142,8 +142,8 @@ public class dodajanje_podatkov_uporabnika extends ActionBarActivity {
         catch(Exception e)
         {
 
-            Toast.makeText(getApplicationContext(), e.toString(),
-                    Toast.LENGTH_LONG).show();
+            /*Toast.makeText(getApplicationContext(), e.toString(),
+                    Toast.LENGTH_LONG).show();*/
             prikaz.setHeight(0);
         }
 

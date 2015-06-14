@@ -31,11 +31,10 @@ public class MyAlarmService2 extends Service {
 
     @SuppressWarnings("static-access")
     @Override
-    public void onStart(Intent intent, int startId)
+    public int onStartCommand(Intent intent,int flags,int startId)
     {
-        Toast.makeText(getApplicationContext(), "ALARM ZAGNAN! 2",
-                Toast.LENGTH_SHORT).show();
         WearableUtils.showNotificationWithConfirmation(getApplicationContext(), "Opozorilo", "Potrebno bo pojesti kosilo");
+        return START_STICKY;
     }
 
     @Override
