@@ -115,6 +115,10 @@
             android:name=".confirmation_activity"
             android:label="@string/title_activity_confirmation_activity" >
         </activity>
+        <activity
+            android:name=".napovedni_model"
+            android:label="@string/title_activity_napovedni_model" >
+        </activity>
     </application>
 
 </manifest>

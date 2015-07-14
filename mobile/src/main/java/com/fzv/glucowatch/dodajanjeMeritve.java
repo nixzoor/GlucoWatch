@@ -2,6 +2,7 @@ package com.fzv.glucowatch;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.pdf.PdfDocument;
 import android.support.v7.app.ActionBarActivity;
@@ -105,5 +106,10 @@ public class dodajanjeMeritve extends ActionBarActivity {
 
         txtVse.setText(text);
 
+    }
+
+    public void activityNapovedniModelClick(View view)
+    {
+        startActivity(new Intent(dodajanjeMeritve.this, napovedni_model.class) );
     }
 }
