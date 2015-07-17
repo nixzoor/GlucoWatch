@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
             boolean connected = PebbleKit.isWatchConnected(getApplicationContext());
             if(connected)
             {
-                writefileToPhone("GlucoWatch.pbw");
+                writefileToPhone("GlucoSense_W.pbw");
             }
         }
         else
