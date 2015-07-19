@@ -58,6 +58,7 @@ public class MainActivity extends ActionBarActivity {
             getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                     .putBoolean("isFirstRun", false).commit();
             startActivity(new Intent(MainActivity.this, dodajanje_podatkov_uporabnika.class));
+
             boolean connected = PebbleKit.isWatchConnected(getApplicationContext());
             if(connected)
             {

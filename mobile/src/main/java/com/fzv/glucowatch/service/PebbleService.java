@@ -56,12 +56,11 @@ public class PebbleService extends Service {
 
         PebbleKit.registerReceivedDataHandler(this, new PebbleKit.PebbleDataReceiver(PEBBLE_APP_UUID) {
 
-
             @Override
             public void receiveData(Context arg0, int arg1, PebbleDictionary arg2) {
                 //	Log.i(getLocalClassName(), "Received value=" + arg2.getInteger(1) + " for key: 0");
 
-                final Integer insulinValue=(int) (long) arg2.getInteger(0);  //enka je key od dictionary
+                final Integer insulinValue=(int) (long) arg2.getInteger(0);  //ničla je key od dictionary
                 final Integer glucoseValue=(int) (long)arg2.getInteger(1);
                 final Integer mealSize=(int) (long) arg2.getInteger(2);
                 final Integer ohValue=(int) (long) arg2.getInteger(3);
